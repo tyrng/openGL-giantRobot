@@ -40,11 +40,11 @@ void head() {
 
 	//PlatespikeL
 	glPushMatrix();
-	glRotatef(-15, 0, 0, 1);
+	glRotatef(-20, 0, 0, 1);
 	glRotatef(90, 1, 0, 0);
-		x1 = -0.55, y1 = 0.15,
+		x1 = -0.4, y1 = 0.15,
 		x2 = -0.2, y2 = 0.15,
-		x3 = -0.2, y3 = -0.15,
+		x3 = -0.2, y3 = -0.03,
 		z0 = 0.05, z1 = 0.01;
 
 	float platespikeL[8] = { x1,x2,x3,y1,y2,y3,z0,z1 };
@@ -53,11 +53,11 @@ void head() {
 
 	//PlatespikeR
 	glPushMatrix();
-	glRotatef(15, 0, 0, 1);
+	glRotatef(20, 0, 0, 1);
 	glRotatef(90, 1, 0, 0);
-		x1 = 0.55, y1 = 0.15,
+		x1 = 0.4, y1 = 0.15,
 		x2 = 0.2, y2 = 0.15,
-		x3 = 0.2, y3 = -0.15,
+		x3 = 0.2, y3 = -0.03,
 		z0 = 0.05, z1 = 0.01;
 
 	float platespikeR[8] = { x1,x2,x3,y1,y2,y3,z0,z1 };
@@ -66,6 +66,7 @@ void head() {
 
 	//Peacock
 	glPushMatrix();
+	glColor3f(0.3f, 0.3f, 0.3f);
 		x1 = 0.025, y1 = 0.0,
 		x2 = -0.025, y2 = 0.0,
 		x3 = -0.025, y3 = 0.55,
@@ -74,6 +75,22 @@ void head() {
 
 	float peacock[10] = { x1,x2,x3,x4,y1,y2,y3,y4,z0,z1 };
 	my3DPolygon(peacock, sizeof(peacock) / sizeof(peacock[0]));
+	glPopMatrix();
+
+	//RocketLauncherL
+	glPushMatrix();
+	glTranslatef(-0.25f, 0.17f, -0.07f);
+	glRotatef(-80, 0, 1, 0);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	cylinder2(0.1, 0.45, 0.7*255, 0.7 * 255, 0.7 * 255);
+	glPopMatrix();
+
+	//RocketLauncherL
+	glPushMatrix();
+	glTranslatef(0.25f, 0.17f, -0.07f);
+	glRotatef(-100, 0, 1, 0);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	cylinder2(0.1, 0.45, 0.7 * 255, 0.7 * 255, 0.7 * 255);
 	glPopMatrix();
 
 	glPopMatrix();
