@@ -12,6 +12,54 @@ void upperHand(char position) {
 	gluQuadricTexture(var, GL_TRUE);
 
 	glPushMatrix();
+	//Cylinder pipe boosters
+	glTranslatef(p, 0.6f, 0.0f);
+	glScalef(1.1, 1.1, 1.0);
+	glRotatef(-20, 1.0, 0.0, 0.0);
+	glColor3f(0.9f, 0.9f, 0.9f);
+	gluCylinder(var, 0.08, 0.04, 0.4, 10, 10);
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glScalef(1.0, 1.0, 1.0);
+	glPushMatrix();
+	//Cylinder spikes
+	glTranslatef(p, 0.52f, -0.05f);
+	glRotatef(140, 1.0, 0.0, 0.0);
+	glColor3f(0.6f, 0.6f, 0.6f);
+	gluCylinder(var, 0.06, 0.0, 0.12, 6, 6);
+	glPopMatrix();
+	
+	//SPIKE #2 MID SPIKE
+	glPushMatrix();
+	glTranslatef(p, 0.61f, -0.09f);
+	glRotatef(180, 1.0, 0.0, 0.0);
+	gluCylinder(var, 0.08, 0.0, 0.15, 6, 6);
+	glPopMatrix();
+
+	//SPIKE #3
+	glTranslatef(p, 0.7f, -0.04f);
+	glRotatef(250, 1.0, 0.0, 0.0);
+	gluCylinder(var, 0.06, 0.0, 0.09, 6, 6);
+
+	glPopMatrix();
+
+
+	//CYLINDER AETHETIC
+	glPushMatrix();
+	glTranslatef(p, 0.6f, 0.0f);
+
+	glColor3f(0.9f, 0.9f, 0.9f);
+	cylinder2(0.07, 0.29);
+
+	glPopMatrix();
+
+
+
+
+	//000 BALL OF DOOM!
+	glPushMatrix();
 	glTranslatef(p, 0.6f, 0.0f);
 	glScalef(1.1, 1.1, 1.0);
 	glRotatef(-10, 1.0, 0.0, 0.0);
@@ -19,15 +67,43 @@ void upperHand(char position) {
 	glColor3f(0.9f, 0.9f, 0.9f);
 	gluSphere(var, 0.13, 8, 8);
 
+	glPopMatrix();
+
+
+	//BLOCKY ARM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	glPushMatrix();
+
 	glColor3f(0.9f, 0.9f, 0.9f);
-	glTranslatef(0.0f, -0.13f, 0.0f);
-	gluSphere(var, 0.09, 8, 8);
+	glRotatef(-10, 1.0, 0.0, 0.0);
+	glTranslatef(p-0.07f, 0.165f, 0.10f);
+	glScalef(0.65, 0.65, 0.65);
 
-	glTranslatef(0.0f, -0.1f, 0.0f);
-	gluSphere(var, 0.08, 8, 8);
+	//cuboid!@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	glColor3f(0.9f, 0.9f, 0.9f);
 
-	glTranslatef(0.0f, -0.1f, 0.0f);
-	gluSphere(var, 0.07, 8, 8);
+	float x1 = 0.0, y1 = 0.45,
+		x2 = 0.22, y2 = 0.45,
+		x3 = 0.22, y3 = 0,
+		x4 = 0, y4 = 0,
+		z0 = 0.1, z1 = -0.1;
+
+	float topArm[10] = { x1,x2,x3,x4,y1,y2,y3,y4,z0,z1 };
+	my3DPolygon(topArm, sizeof(topArm) / sizeof(topArm[0]));
+
+	glPopMatrix();
+
+	//ADDITIONAL ARMOUR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! COME AND CHECK ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	glPushMatrix();
+
+	glColor3f(0.6f, 0.6f, 0.6f);
+	glRotatef(-25, 1.0, 0.0, 0.0);
+	glTranslatef(p - 0.04f, 0.23f, 0.14f);
+	glScalef(0.4, 0.4, 0.4);
+
+	my3DPolygon(topArm, sizeof(topArm) / sizeof(topArm[0]));
+
+
+
 	glPopMatrix();
 
 	gluDeleteQuadric(var);
