@@ -115,7 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Arm.cpp" />
+    <ClCompile Include="Legs.cpp" />
+    <ClCompile Include="Torso.cpp" />
+    <ClCompile Include="Head.cpp" />
+    <ClCompile Include="Misc.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Shapes.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BodyParts.h" />
+    <ClInclude Include="Tools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
