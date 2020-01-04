@@ -17,7 +17,6 @@ using namespace std;
 //Shapes
 void cube();
 void cylinder();
-//void cylinder2(float radius, float halfLength, int slices);
 void cylinder2(float radius, float height, int sideR = NULL, int sideG = NULL, int sideB = NULL);
 void cuboid();
 void pyramid();

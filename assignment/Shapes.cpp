@@ -89,11 +89,15 @@ void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
 	while (angle < 2 * M_PI) {
 		x = radius * cos(angle);
 		y = radius * sin(angle);
+		glTexCoord2f(x, height);
 		glVertex3f(x, y, height);
+		glTexCoord2f(x, 0.0);
 		glVertex3f(x, y, 0.0);
 		angle = angle + angle_stepsize;
 	}
+	glTexCoord2f(radius, height);
 	glVertex3f(radius, 0.0, height);
+	glTexCoord2f(radius, 0.0);
 	glVertex3f(radius, 0.0, 0.0);
 	glEnd();
 
@@ -105,9 +109,11 @@ void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
 	while (angle < 2 * M_PI) {
 		x = radius * cos(angle);
 		y = radius * sin(angle);
+		glTexCoord2f(x, 0);
 		glVertex3f(x, y, 0);
 		angle = angle + angle_stepsize;
 	}
+	glTexCoord2f(radius, 0);
 	glVertex3f(radius, 0.0, 0);
 	glEnd();
 
@@ -119,9 +125,11 @@ void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
 	while (angle < 2 * M_PI) {
 		x = radius * cos(angle);
 		y = radius * sin(angle);
+		glTexCoord2f(x, 0);
 		glVertex3f(x, y, height);
 		angle = angle + angle_stepsize;
 	}
+	glTexCoord2f(radius, height);
 	glVertex3f(radius, 0.0, height);
 	glEnd();
 }
