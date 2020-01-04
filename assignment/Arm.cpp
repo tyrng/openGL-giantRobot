@@ -141,12 +141,125 @@ void lowerHand(char position) {
 	glRotatef(90, 1.0, 0.0, 0.0);
 	gluCylinder(var, 0.1, 0.06, 0.3, 10, 10);
 
-	glColor3f(0.2f, 0.2f, 0.2f);
+	glColor3f(0.7f, 0.05f, 0.05f);
 	glTranslatef(0.0f, 0.05f, 0.0f);
-	glScalef(1.0, 0.5, 1.0);
+	glScalef(1.0, 0.53, 1.0);
 	glRotatef(140, 1.0, 0.0, 0.0);
 	myElbow();
 	glPopMatrix();
+
+	//CYLINDER AESTHETICSSSSSSSSSS
+	glPushMatrix();
+
+	glTranslatef(p, 0.25f, 0.05f);
+	glColor3f(0.9f, 0.9f, 0.9f);
+	cylinder2(0.05, 0.21);
+
+
+	glPopMatrix();
+
+	//MOARRRRR PLATE ARMOURRRRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	glPushMatrix();
+
+	glColor3f(0.9f, 0.9f, 0.9f);
+	glRotatef(15, 1.0, 0.0, 0.0); 
+
+	glTranslatef(p-0.04, -0.037f, 0.0f);
+	glScalef(0.35, 0.35, 0.35);
+	
+	float x1 = 0.0, y1 = 0.45,
+		x2 = 0.22, y2 = 0.45,
+		x3 = 0.22, y3 = 0,
+		x4 = 0, y4 = 0,
+		z0 = 0.08, z1 = -0.08;
+
+	float plate[10] = { x1,x2,x3,x4,y1,y2,y3,y4,z0,z1 };
+	my3DPolygon(plate, sizeof(plate) / sizeof(plate[0]));
+
+	glPopMatrix();
+
+	//SECOND ARMOURRRR!!!!!!!!!!
+
+	glPushMatrix();
+
+	glColor3f(0.6f, 0.6f, 0.6f);
+	glRotatef(15, 1.0, 0.0, 0.0);
+
+	glTranslatef(p - 0.0365, 0.0f, -0.022f);
+	glScalef(0.35, 0.35, 0.35);
+
+	x1 = 0.0, y1 = 0.45,
+		x2 = 0.20, y2 = 0.45,
+		x3 = 0.20, y3 = 0,
+		x4 = 0, y4 = 0,
+		z0 = 0.08, z1 = -0.08;
+
+	float plate2[10] = { x1,x2,x3,x4,y1,y2,y3,y4,z0,z1 };
+	my3DPolygon(plate2, sizeof(plate2) / sizeof(plate2[0]));
+
+	glPopMatrix();
+
+	//THIURDDDDDD FCKING  ARMOURRRR!!!!!!!!!!
+
+	glPushMatrix();
+
+	glColor3f(0.4f, 0.4f, 0.4f);
+	glRotatef(15, 1.0, 0.0, 0.0);
+
+	glTranslatef(p - 0.029, 0.0375f, -0.035f);
+	glScalef(0.35, 0.35, 0.35);
+
+	x1 = 0.0, y1 = 0.45,
+		x2 = 0.16, y2 = 0.45,
+		x3 = 0.16, y3 = 0,
+		x4 = 0, y4 = 0,
+		z0 = 0.08, z1 = -0.08;
+
+	float plate3[10] = { x1,x2,x3,x4,y1,y2,y3,y4,z0,z1 };
+
+	my3DPolygon(plate3, sizeof(plate3) / sizeof(plate3[0]));
+
+	glPopMatrix();
+
+	//ANOTHER BALL OF DOOM IN LOWER ARM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	glPushMatrix();
+	glTranslatef(p, 0.12f, -0.019f);
+
+	glColor3f(0.9f, 0.9f, 0.9f);
+	gluSphere(var, 0.04, 16, 16);
+
+	glPopMatrix();
+
+	//CYLINDER OF CONECTOR TO THE PALMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	glPushMatrix();
+	glTranslatef(p, -0.07f, 0.052f);
+
+	glColor3f(0.9f, 0.9f, 0.9f);
+	cylinder2(0.04, 0.15);
+
+	glPopMatrix();
+
+
+	//PALMS WEAK ARMS A HEAVY MOMS SPAGETTTTT!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	glPushMatrix();
+
+	glColor3f(0.9f, 0.9f, 0.9f);
+	glRotatef(10, 1.0, 0, 0);
+	glTranslatef(p - 0.0718, -0.083f, 0.018f);
+	glScalef(0.35, 0.35, 0.35);
+
+	x1 = 0.0, y1 = 0.1,
+		x2 = 0.41, y2 = 0.1,
+		x3 = 0.41, y3 = 0,
+		x4 = 0, y4 = 0,
+		z0 = 0.08, z1 = -0.08;
+
+	float cubeCon[10] = { x1,x2,x3,x4,y1,y2,y3,y4,z0,z1 };
+	my3DPolygon(cubeCon, sizeof(cubeCon) / sizeof(cubeCon[0]));
+
+	glPopMatrix();
+
 
 	gluDeleteQuadric(var);
 }
@@ -174,12 +287,12 @@ void palm(char position) {
 	if (position == 'L') { p = -1; }
 	else if (position == 'R') { p = 1; }
 
-	//Palm
+	//Palm MAGICCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 	glPushMatrix();
 	glColor3f(0.6f, 0.2f, 0.2f);
 	glTranslatef(p*0.39, -0.07f, 0.05f);
-	glRotatef(-100, 0.0, 1.0, 0.0);
-	glRotatef(p * 5, 1.0, 0.0, 0.0);
+	glRotatef(-98, 0.0, 1.0, 0.0);
+	glRotatef(p, 1.0, 0.0, 0.0);
 
 	glScalef(0.8, 1.0, 1.0);
 	myPalm();
