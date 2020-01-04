@@ -20,14 +20,18 @@ using namespace std;
 // mouse movement
 float lastX = 0.0f, lastY = 0.0f;
 float zoomLevel = 0.0f;
+float lastXR = 0.0f, lastYR = 0.0f;
 
 float wholeBodyAngleX = 0.0;
 float wholeBodyAngleY = 0.0;
 float wholeBodyAngleZ = 0.0;
+float wholeBodyTranslateX = 0.0;
+float wholeBodyTranslateY = 0.0;
 
 //For camera
-boolean cameraOn = false;
-float camera = -2;
+boolean cameraOn = true;
+//float camera = -2;
+float camera = 1;
 
 //which part to move
 char bodyParts = 'A';
@@ -102,12 +106,24 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 	case WM_MOUSEMOVE:
 		switch (wParam) {
 		case MK_LBUTTON:
+		{
 			int xPos = GET_X_LPARAM(lParam);
 			int yPos = GET_Y_LPARAM(lParam);
 			wholeBodyAngleY += xPos - lastX;
 			wholeBodyAngleX += yPos - lastY;
 			lastX = xPos;
 			lastY = yPos;
+		}
+			break;
+		case MK_RBUTTON:
+		{
+			int xPosR = GET_X_LPARAM(lParam);
+			int yPosR = GET_Y_LPARAM(lParam);
+			wholeBodyTranslateX += (xPosR - lastXR)/1000.0f;
+			wholeBodyTranslateY -= (yPosR - lastYR) / 1000.0f;
+			lastXR = xPosR;
+			lastYR = yPosR;
+		}
 			break;
 		}
 		break;
@@ -119,6 +135,10 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		//if (!textureOn)
 			//textureOn = true;
 			break;
+	case WM_RBUTTONDOWN:
+		lastXR = GET_X_LPARAM(lParam);
+		lastYR = GET_Y_LPARAM(lParam);
+		break;
 	case WM_MOUSEWHEEL:
 		zoomLevel += GET_WHEEL_DELTA_WPARAM(wParam) / 120.0f;
 		if (cameraOn) { camera += GET_WHEEL_DELTA_WPARAM(wParam) / 1000.0f; }
@@ -228,20 +248,20 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			else if (bodyParts == 'D') { if (DangleY < 20) DangleY += 5.0; }
 		}
 
-		else if (wParam == 0x58) //X -rotate x direction
-		{
-			wholeBodyAngleX += 5.0;
-		}
-		else if (wParam == 0x59) //Y -rotate y direction
-		{
-			wholeBodyAngleY += 5.0;
+		//else if (wParam == 0x58) //X -rotate x direction
+		//{
+		//	wholeBodyAngleX += 5.0;
+		//}
+		//else if (wParam == 0x59) //Y -rotate y direction
+		//{
+		//	wholeBodyAngleY += 5.0;
 
-		}
-		else if (wParam == 0x5A) //Z -rotate z direction
-		{
-			wholeBodyAngleZ += 5.0;
+		//}
+		//else if (wParam == 0x5A) //Z -rotate z direction
+		//{
+		//	wholeBodyAngleZ += 5.0;
 
-		}
+		//}
 		else if (wParam == 0x48) //H - HEAD 
 		{
 			bodyParts = 'H';
@@ -345,8 +365,9 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			wholeBodyAngleX = 0.0;
 			wholeBodyAngleY = 0.0;
 			wholeBodyAngleZ = 0.0;
-			cameraOn = false;
-			camera = -2;
+			cameraOn = true;
+			//camera = -2;
+			camera = 1;
 
 			HangleX = 0.0; HangleY = 0.0; BangleX = 0.0; BangleY = 0.0; Wangle = 0.0; //body
 			AangleX = 0.0; AangleY = 0.0; EangleX = 0.0; EangleY = 0.0; PangleX = 0.0; PangleY = 0.0; FMangle = 0.0; FDangle = 0.0; //right hand
@@ -724,16 +745,16 @@ void display()
 	//setup camera
 	if (cameraOn) {
 		//Set Up Camera
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glFrustum(-0.5, 0.5, -0.5, 0.5, 1.0, 10.0);//Left Right Bottom Top Near Far
-												   //glOrtho(-1, 1, -1, 1, 1.0, 10.0);//Left Right Bottom Top Near Far
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+		//glMatrixMode(GL_PROJECTION);
+		//glLoadIdentity();
+		//glFrustum(-0.5, 0.5, -0.5, 0.5, 1.0, 10.0);//Left Right Bottom Top Near Far
+		//										   //glOrtho(-1, 1, -1, 1, 1.0, 10.0);//Left Right Bottom Top Near Far
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
 
-		gluLookAt(0, 0.6, camera, // look from camera XYZ 
-			0, 0.1, 0,  // look at the origin 
-			0, 1, 0); // positive Y up vector
+		//gluLookAt(0, 0.6, camera, // look from camera XYZ 
+		//	0, 0.1, 0,  // look at the origin 
+		//	0, 1, 0); // positive Y up vector
 	}
 	else {
 		if (animationON == false) {
@@ -765,6 +786,8 @@ void display()
 	}
 
 	glPushMatrix();
+	glScalef(camera, camera, camera);
+	glTranslatef(wholeBodyTranslateX, wholeBodyTranslateY, 0);
 	glRotatef(wholeBodyAngleX, 1, 0, 0);
 	glRotatef(wholeBodyAngleY, 0, 1, 0);
 	glRotatef(wholeBodyAngleZ, 0, 0, 1);
