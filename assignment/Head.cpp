@@ -67,8 +67,8 @@ void head() {
 	//Peacock
 	glPushMatrix();
 	glColor3f(0.3f, 0.3f, 0.3f);
-		x1 = 0.025, y1 = 0.0,
-		x2 = -0.025, y2 = 0.0,
+		x1 = 0.025, y1 = 0.1,
+		x2 = -0.025, y2 = 0.1,
 		x3 = -0.025, y3 = 0.55,
 		x4 = 0.025, y4 = 0.55,
 		z0 = 0.2, z1 = -0.2;
@@ -81,16 +81,48 @@ void head() {
 	glPushMatrix();
 	glTranslatef(-0.25f, 0.17f, -0.07f);
 	glRotatef(-80, 0, 1, 0);
-	glColor3f(0.3f, 0.3f, 0.3f);
+
+	glPushMatrix();
+	glColor3f(0.4f, 0.4f, 0.4f);
 	cylinder2(0.1, 0.45, 0.7*255, 0.7 * 255, 0.7 * 255);
 	glPopMatrix();
 
-	//RocketLauncherL
+	glPushMatrix();
+	glTranslatef(0.03, 0, 0);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	cylinder2(0.11, 0.2, 0.1 * 255, 0.1 * 255, 0.1 * 255);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-0.13, 0, 0);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	cylinder2(0.12, 0.2, 0.1 * 255, 0.1 * 255, 0.1 * 255);
+	glPopMatrix();
+
+	glPopMatrix();
+
+	//RocketLauncherR
 	glPushMatrix();
 	glTranslatef(0.25f, 0.17f, -0.07f);
 	glRotatef(-100, 0, 1, 0);
-	glColor3f(0.3f, 0.3f, 0.3f);
+
+	glPushMatrix();
+	glColor3f(0.4f, 0.4f, 0.4f);
 	cylinder2(0.1, 0.45, 0.7 * 255, 0.7 * 255, 0.7 * 255);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.03, 0, 0);
+	glColor3f(0.3f, 0.3f, 0.3f);
+	cylinder2(0.11, 0.2, 0.1 * 255, 0.1 * 255, 0.1 * 255);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-0.13, 0, 0);
+	glColor3f(0.2f, 0.2f, 0.2f);
+	cylinder2(0.12, 0.2, 0.1 * 255, 0.1 * 255, 0.1 * 255);
+	glPopMatrix();
+
 	glPopMatrix();
 
 	glPopMatrix();
