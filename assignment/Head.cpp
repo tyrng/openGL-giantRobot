@@ -77,7 +77,7 @@ void head() {
 	my3DPolygon(peacock, sizeof(peacock) / sizeof(peacock[0]));
 	glPopMatrix();
 
-	//RocketLauncherL
+	//LaserLauncherL
 	glPushMatrix();
 	glTranslatef(-0.25f, 0.17f, -0.07f);
 	glRotatef(-80, 0, 1, 0);
@@ -101,7 +101,7 @@ void head() {
 
 	glPopMatrix();
 
-	//RocketLauncherR
+	//LaserLauncherR
 	glPushMatrix();
 	glTranslatef(0.25f, 0.17f, -0.07f);
 	glRotatef(-100, 0, 1, 0);
