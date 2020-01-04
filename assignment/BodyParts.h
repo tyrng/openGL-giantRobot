@@ -18,7 +18,6 @@ using namespace std;
 void head();
 
 //Torso
-void myBody();
 void body();
 void myWaist();
 void waist();
