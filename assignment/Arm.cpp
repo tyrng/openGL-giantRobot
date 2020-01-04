@@ -356,7 +356,7 @@ void fingers(float angleM, float angleD, char position) {
 	glTranslatef(0.0f, -0.05f, 0.0f);
 	glRotatef(n * 45, 1.0, 0.0, 0.0);
 	glRotatef(n * angleD, 1.0, 0.0, 0.0);
-	myFinger(0.07);
+	myFinger(0.05);
 	glPopMatrix();
 
 	//Middle finger
@@ -369,7 +369,7 @@ void fingers(float angleM, float angleD, char position) {
 	glTranslatef(0.0f, -0.05f, 0.0f);
 	glRotatef(n * 45, 1.0, 0.0, 0.0);
 	glRotatef(n * angleD, 1.0, 0.0, 0.0);
-	myFinger(0.09);
+	myFinger(0.05);
 	glPopMatrix();
 
 	//Ring finger
@@ -382,7 +382,7 @@ void fingers(float angleM, float angleD, char position) {
 	glTranslatef(0.0f, -0.05f, 0.0f);
 	glRotatef(n * 45, 1.0, 0.0, 0.0);
 	glRotatef(n * angleD, 1.0, 0.0, 0.0);
-	myFinger(0.07);
+	myFinger(0.05);
 	glPopMatrix();
 
 	//Pinkie
