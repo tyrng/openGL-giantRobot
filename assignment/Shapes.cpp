@@ -94,7 +94,8 @@ void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
 	glEnd();
 
 	/** Draw the circle on bottom of cylinder */
-	glColor3ub(sideR, sideG, sideB);
+	if (sideR != NULL && sideG != NULL && sideB != NULL)
+		glColor3ub(sideR, sideG, sideB);
 	glBegin(GL_POLYGON);
 	angle = 0.0;
 	while (angle < 2 * M_PI) {
@@ -107,7 +108,8 @@ void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
 	glEnd();
 
 	/** Draw the circle on top of cylinder */
-	glColor3ub(sideR, sideG, sideB);
+	if (sideR != NULL && sideG != NULL && sideB != NULL)
+		glColor3ub(sideR, sideG, sideB);
 	glBegin(GL_POLYGON);
 	angle = 0.0;
 	while (angle < 2 * M_PI) {

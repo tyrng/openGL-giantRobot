@@ -18,7 +18,7 @@ using namespace std;
 void cube();
 void cylinder();
 //void cylinder2(float radius, float halfLength, int slices);
-void cylinder2(float radius, float height, int R, int G, int B);
+void cylinder2(float radius, float height, int sideR = NULL, int sideG = NULL, int sideB = NULL);
 void cuboid();
 void pyramid();
 void my3DPolygon(float polygon[], int numOfElements);
