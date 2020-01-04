@@ -667,16 +667,16 @@ void attackON() {
 	}
 	else if (attackPhase == 2)
 	{
-		if (QangleX < 90)
+		if (QangleX < 60)
 		{
-			QangleX += (0.5*attackSpeed);
+			QangleX += (0.4*attackSpeed);
 			if (RangleX > 0) {
-				RangleX -= 0.5*attackSpeed;
+				RangleX -= 0.3*attackSpeed;
 			}
-			swordy += 0.004*attackSpeed;
-			swordz += 0.00025*attackSpeed;
-			swordRx -= 0.30*attackSpeed;
-			if (QangleX >= 90)
+			swordy += 0.0034*attackSpeed;
+			swordz += 0.0024*attackSpeed;
+			swordRx -= 0.40*attackSpeed;
+			if (QangleX >= 60)
 				attackPhase = 3;
 		}
 
@@ -685,13 +685,13 @@ void attackON() {
 	{
 		if (QangleX >= 0)
 		{
-			QangleX -= (0.5*attackSpeed);
+			QangleX -= (0.4*attackSpeed);
 			if (RangleX <= 45) {
-				RangleX += 0.5*attackSpeed;
+				RangleX += 0.3*attackSpeed;
 			}
-			swordy -= 0.004*attackSpeed;
-			swordz -= 0.00025*attackSpeed;
-			swordRx += 0.30*attackSpeed;
+			swordy -= 0.0034*attackSpeed;
+			swordz -= 0.0024*attackSpeed;
+			swordRx += 0.40*attackSpeed;
 			if (QangleX <= 0)
 				attackPhase = 4;
 		}
@@ -742,7 +742,7 @@ void attackON() {
 		glRotatef(-45, 1, 0, 0);
 		glRotatef(90, 0, 1, 0);
 		glScalef(0.5, 1, 0.5);
-		glTranslatef(0.35 + swordz, 0.35 + swordy, -0.35);
+		glTranslatef(0.35 + swordz, 0.3 + swordy, -0.35);
 		glRotatef(swordRx, 0, 0, 1);
 		sword();
 		glPopMatrix();

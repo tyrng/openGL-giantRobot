@@ -59,7 +59,7 @@ void sword() {
 	glPushMatrix();
 	glRotatef(-90, 1, 0, 0);
 	glTranslatef(0.075, 0.28, 0);
-	glScalef(0.5, 1, 5);
+	glScalef(0.5, 1, 10);
 	glScalef(0.25, 0.25, 0.25);
 	glColor3f(1, 1, 1);
 	pyramid();
