@@ -159,14 +159,14 @@ void waist() {
 	glPushMatrix();
 	glColor3f(0.9f, 0.9f, 0.9f);
 	glTranslatef(0.0f, -0.12f, 0.0f);
-	cylinder2(0.07, 0.5);
+	cylinder2(0.07, 0.55);
 	glPopMatrix();
 
 	//Small Waist Pipe
 	glPushMatrix();
 	glColor3f(0.5f, 0.5f, 0.5f);
 	glTranslatef(0.0f, -0.12f, 0.0f);
-	cylinder2(0.05, 0.55);
+	cylinder2(0.05, 0.6);
 	glPopMatrix();
 }
 
