@@ -67,21 +67,19 @@ void sword() {
 }
 
 void shield() {
-	glPushMatrix();
-	glScalef(0.05, 1, 1);
-	glScalef(0.5, 0.5, 0.5);
-	glColor3f(0.2, 0.2, 0.2);
-	cube();
-	glPopMatrix();
+
+	GLUquadricObj *var = NULL;
+	var = gluNewQuadric();
+	gluQuadricTexture(var, GL_TRUE);
 
 	glPushMatrix();
-	glScalef(0.05, 1, 1);
-	glScalef(0.5, 0.5, 0.5);
-	glTranslatef(2, 0.5, -0.2);
-	glRotatef(45, 1, 0, 0);
-	glColor3f(0.4, 0.4, 0.4);
-	cube();
+	glColor3f(0.9f, 0.9f, 0.9f);
+	glScalef(1.3, 1.8, 0.7);
+	glRotatef(175, 1.0, 0.0, 0.0);
+	gluCylinder(var, 0.35, 0.0, 0.15, 6, 6);
 	glPopMatrix();
+
+	gluDeleteQuadric(var);
 }
 
 void myYogaMat() {

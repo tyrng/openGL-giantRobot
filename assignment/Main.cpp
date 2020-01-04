@@ -50,6 +50,11 @@ boolean walk = false, fly = false, playBall = false, attack = false, bow = false
 boolean dir = 1; //direction
 int loadTimes = 0;
 float ballX = 0.05, ballY = 0;
+int attackPhase = 1;
+float shieldy = 0.0f;
+float shieldz = 0.0f;
+float swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
+float delay = 0.0f;
 
 void resetToFalse() {
 	walk = false;
@@ -93,6 +98,11 @@ void clear() {
 	glLoadIdentity();
 	resetToFalse();
 	lightOn = false;
+	attackPhase = 1; 
+	shieldy = 0.0f; 
+	shieldz = 0.0f;
+	swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
+	delay = 0.0f;
 }
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -365,6 +375,8 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			wholeBodyAngleX = 0.0;
 			wholeBodyAngleY = 0.0;
 			wholeBodyAngleZ = 0.0;
+			wholeBodyTranslateX = 0.0;
+			wholeBodyTranslateY = 0.0;
 			cameraOn = true;
 			//camera = -2;
 			camera = 1;
@@ -387,6 +399,11 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			dir = 1;
 			resetToFalse();
 			glLoadIdentity();
+			attackPhase = 1;
+			shieldy = 0.0f;
+			shieldz = 0.0f;
+			swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
+			delay = 0.0f;
 		}
 		break;
 
@@ -616,34 +633,124 @@ void playBallON() {
 }
 
 void attackON() {
-	if (RangleX != 90) {
-		RangleX += 0.5;
-		EangleX += 0.5;
-	}
-	if (RangleX == 90) {
-		if (UangleY != 90) {
-			UangleY += 0.5;
-			UangleX -= 0.1;
+	float attackSpeed = 3.5;
+	if (attackPhase == 1) {
+		if (RangleX < 45) {
+			RangleX += 0.5;
 		}
-		if (UangleY == 90) {
-			if (IDangle != 90) {
-				IDangle += 0.5;
+		else {
+			//if (UangleY != 90) {
+			//	UangleY += 0.5;
+			//	UangleX -= 0.1;
+			//}
+			//if (UangleY == 90) {
+				if (IDangle != 90) {
+					IDangle += 0.5;
+				}
+				if (IDangle == 90) {
+				}
+			//}
+		}
+		if (EangleX < 70)
+		{
+			EangleX += 0.5;
+		}
+		else
+		{
+			if (FDangle != 90) {
 				FDangle += 0.5;
 			}
-			if (IDangle == 90) {
-				glPushMatrix();
-				glRotatef(90, 0, 1, 0);
-				glScalef(0.5, 1, 0.5);
-				glTranslatef(0.35, 0.40, -0.23);
-				sword();
-				glPopMatrix();
-
-				glPushMatrix();
-				glTranslatef(0.5, 0, -0.3);
-				shield();
-				glPopMatrix();
+			if (FDangle == 90) {
+				attackPhase = 2;
 			}
 		}
+	}
+	else if (attackPhase == 2)
+	{
+		if (QangleX < 90)
+		{
+			QangleX += (0.5*attackSpeed);
+			if (RangleX > 0) {
+				RangleX -= 0.5*attackSpeed;
+			}
+			swordy += 0.004*attackSpeed;
+			swordz += 0.00025*attackSpeed;
+			swordRx -= 0.30*attackSpeed;
+			if (QangleX >= 90)
+				attackPhase = 3;
+		}
+
+	}
+	else if (attackPhase == 3)
+	{
+		if (QangleX >= 0)
+		{
+			QangleX -= (0.5*attackSpeed);
+			if (RangleX <= 45) {
+				RangleX += 0.5*attackSpeed;
+			}
+			swordy -= 0.004*attackSpeed;
+			swordz -= 0.00025*attackSpeed;
+			swordRx += 0.30*attackSpeed;
+			if (QangleX <= 0)
+				attackPhase = 4;
+		}
+
+	}
+	else if (attackPhase == 4)
+	{
+		if (delay < 100) {
+			delay += 1;
+		}
+		else
+		{
+			delay = 0.0f;
+			attackPhase = 5;
+		}
+	}
+	else if (attackPhase == 5)
+	{
+		if (AangleX < 90) {
+			AangleX += 0.5*attackSpeed;
+			if (EangleX > 0) {
+				EangleX -= 0.5*attackSpeed;
+			}
+			shieldy += 0.0025*attackSpeed;
+			shieldz -= 0.0025*attackSpeed;
+			if (AangleX >= 90)
+				attackPhase = 6;
+		}
+	}
+
+	else if (attackPhase == 6)
+	{
+
+		if (AangleX >= 0) {
+			AangleX -= 0.5*attackSpeed;
+			if (EangleX <= 90) {
+				EangleX += 0.5*attackSpeed;
+			}
+			shieldy -= 0.0025*attackSpeed;
+			shieldz += 0.0025*attackSpeed;
+			if (AangleX <= 0)
+				attackPhase = 2;
+		}
+	}
+	if (attackPhase != 1)
+	{
+		glPushMatrix();
+		glRotatef(-45, 1, 0, 0);
+		glRotatef(90, 0, 1, 0);
+		glScalef(0.5, 1, 0.5);
+		glTranslatef(0.35 + swordz, 0.35 + swordy, -0.35);
+		glRotatef(swordRx, 0, 0, 1);
+		sword();
+		glPopMatrix();
+
+		glPushMatrix();
+		glTranslatef(0.35, 0.15 + shieldy, -0.45 + shieldz);
+		shield();
+		glPopMatrix();
 	}
 }
 
