@@ -1031,15 +1031,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 
-	/*if (cameraOn) {
+	//if (cameraOn) {
 	//Set Up Camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-0.5, 0.5, -0.5, 0.5, 1.0, 10.0);//Left Right Bottom Top Near Far
-	//glOrtho(-5, 5, -5, 5, 1.0, 10.0);//Left Right Bottom Top Near Far
+	//glFrustum(-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);//Left Right Bottom Top Near Far
+	glOrtho(-10, 10, -10, 10, 1.0, 1.0);//Left Right Bottom Top Near Far
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	}*/
+	//}
 
 	glEnable(GL_DEPTH_TEST);
 

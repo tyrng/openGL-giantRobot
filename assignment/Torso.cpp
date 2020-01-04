@@ -1,19 +1,6 @@
 #include "BodyParts.h"
 #include "Tools.h"
 
-void myBody() {
-	float x1 = 0.15, y1 = 0.05,
-		x2 = 0.25, y2 = 0.0,
-		x3 = 0.15, y3 = -0.25,
-		x4 = -0.15, y4 = -0.25,
-		x5 = -0.25, y5 = 0.0,
-		x6 = -0.15, y6 = 0.05,
-		z0 = 0.1, z1 = -0.1;
-
-	float body[14] = { x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6,z0,z1 };
-	my3DPolygon(body, sizeof(body) / sizeof(body[0]));
-}
-
 void body() {
 	GLUquadricObj *var = NULL;
 	var = gluNewQuadric();
@@ -24,101 +11,110 @@ void body() {
 	glColor3f(0.4f, 0.05f, 0.05f);
 	glTranslatef(0.0f, 0.65f, 0.0f);
 	glScalef(1.2, 1.2, 1.0);
-	myBody();
+	float x1 = 0.15, y1 = 0.05,
+		x2 = 0.25, y2 = 0.0,
+		x3 = 0.15, y3 = -0.31,
+		x4 = -0.15, y4 = -0.31,
+		x5 = -0.25, y5 = 0.0,
+		x6 = -0.15, y6 = 0.05,
+		z0 = 0.1, z1 = -0.1;
+
+	float body[14] = { x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6,z0,z1 };
+	my3DPolygon(body, sizeof(body) / sizeof(body[0]));
 	glPopMatrix();
 
-	//Thorn
-	float scaleX = 0.4;
-	float scaleY = 0.2;
-	float scaleZ = 0.5;
-	//level1
-	//1
+	//Body pyramids
 	glPushMatrix();
-	glTranslatef(-0.2f, 0.63f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//2
+	glColor3f(0.7f, 0.35f, 0.35f);
+
+	//Top Pyramid
 	glPushMatrix();
-	glTranslatef(0.1f, 0.65f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//3
-	glPushMatrix();
-	glTranslatef(0.0f, 0.6f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//4
-	glPushMatrix();
-	glTranslatef(-0.1f, 0.65f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//5
-	glPushMatrix();
-	glTranslatef(0.2f, 0.63f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
+	glTranslatef(0.0f, 0.60f, -0.1f);
+	glRotatef(-167, 1.0, 0, 0);
+	glScalef(0.45, 0.125, 0.325);
+	pyramid();
 	glPopMatrix();
 
-	//level2
+	//Middle Pyramid
 	glPushMatrix();
-	glTranslatef(0.0f, -0.1f, 0.0f);
-	//1
-	glPushMatrix();
-	glTranslatef(-0.2f, 0.63f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//2
-	glPushMatrix();
-	glTranslatef(0.1f, 0.65f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//3
-	glPushMatrix();
-	glTranslatef(0.0f, 0.6f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//4
-	glPushMatrix();
-	glTranslatef(-0.1f, 0.65f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
-	//5
-	glPushMatrix();
-	glTranslatef(0.2f, 0.63f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
-	glPopMatrix();
+	glTranslatef(0.0f, 0.475f, -0.1f);
+	glRotatef(-153, 1.0, 0, 0);
+	glScalef(0.35, 0.125, 0.3);
+	pyramid();
 	glPopMatrix();
 
-	//level3
+	//Bottom Pyramid
 	glPushMatrix();
-	glTranslatef(0.0f, -0.2f, 0.0f);
-	//2
-	glPushMatrix();
-	glTranslatef(0.1f, 0.65f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
+	glTranslatef(0.0f, 0.35f, -0.1f);
+	glRotatef(-140, 1.0, 0, 0);
+	glScalef(0.25, 0.125, 0.25);
+	pyramid();
 	glPopMatrix();
-	//3
-	glPushMatrix();
-	glTranslatef(0.0f, 0.6f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
+
 	glPopMatrix();
-	//4
+
+	//Top Pipe
 	glPushMatrix();
-	glTranslatef(-0.1f, 0.65f, -0.1f);
-	glScalef(scaleX, scaleY, scaleZ);
-	myThorn();
+	glColor3f(0.7f, 0.7f, 0.7f);
+	glTranslatef(0.0f, 0.62f, -0.16f);
+	cylinder2(0.03, 0.42);
 	glPopMatrix();
+
+	//Middle Pipe
+	glPushMatrix();
+	glColor3f(0.7f, 0.7f, 0.7f);
+	glTranslatef(0.0f, 0.515f, -0.16f);
+	cylinder2(0.03, 0.31);
+	glPopMatrix();
+
+	//Bottom Pipe
+	glPushMatrix();
+	glColor3f(0.7f, 0.7f, 0.7f);
+	glTranslatef(0.0f, 0.4f, -0.16f);
+	cylinder2(0.03, 0.23);
+	glPopMatrix();
+
+	//Left Pipe
+	glPushMatrix();
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glTranslatef(-0.17f, 0.48f, -0.1f);
+	glRotated(107,0, 0, 1);
+	cylinder2(0.06, 0.38);
+	glPopMatrix();
+
+	//Right Pipe
+	glPushMatrix();
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glTranslatef(0.17f, 0.48f, -0.1f);
+	glRotated(-107, 0, 0, 1);
+	cylinder2(0.06, 0.38);
+	glPopMatrix();
+
+	//Back Pyramid
+	glPushMatrix();
+	glTranslatef(0.0f, 0.65f, 0.15f);
+	glScalef(0.5, 0.35, 0.2);
+	glRotatef(100, 1.0, 0, 0);
+	glColor3f(0.7f, 0.35f, 0.35f);
+	pyramid();
+	glPopMatrix();
+
+	//Back Left Pipe
+	glPushMatrix();
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glTranslatef(0.17f, 0.44f, 0.11f);
+	glRotated(20, 1, 0, 0);
+	glRotated(-107, 0, 0, 1);
+	cylinder2(0.08, 0.47);
+	glPopMatrix();
+
+	//Back Right Pipe
+	glPushMatrix();
+	glColor3f(0.2f, 0.2f, 0.2f);
+	glTranslatef(-0.17f, 0.44f, 0.11f);
+	glRotated(20, 1, 0, 0);
+	glRotated(107, 0, 0, 1);
+	cylinder2(0.08, 0.47);
 	glPopMatrix();
 
 	//Left Bowel
