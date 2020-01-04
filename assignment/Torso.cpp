@@ -154,6 +154,20 @@ void waist() {
 	glTranslatef(0.0f, 0.26f, 0.0f);
 	glScalef(0.9, 0.9, 0.85);
 	myWaist();
+
+	//Waist Pipe
+	glPushMatrix();
+	glColor3f(0.9f, 0.9f, 0.9f);
+	glTranslatef(0.0f, -0.12f, 0.0f);
+	cylinder2(0.07, 0.5);
+	glPopMatrix();
+
+	//Small Waist Pipe
+	glPushMatrix();
+	glColor3f(0.5f, 0.5f, 0.5f);
+	glTranslatef(0.0f, -0.12f, 0.0f);
+	cylinder2(0.05, 0.55);
+	glPopMatrix();
 }
 
 void buttBones() {
