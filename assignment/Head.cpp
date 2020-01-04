@@ -79,7 +79,8 @@ void head() {
 
 	//LaserLauncherL
 	glPushMatrix();
-	glTranslatef(-0.25f, 0.17f, -0.07f);
+	glTranslatef(-0.26f, 0.15f, -0.07f);
+	glScalef(0.9, 0.9, 0.9);
 	glRotatef(-80, 0, 1, 0);
 
 	glPushMatrix();
@@ -103,7 +104,8 @@ void head() {
 
 	//LaserLauncherR
 	glPushMatrix();
-	glTranslatef(0.25f, 0.17f, -0.07f);
+	glTranslatef(0.26f, 0.15f, -0.07f);
+	glScalef(0.9, 0.9, 0.9);
 	glRotatef(-100, 0, 1, 0);
 
 	glPushMatrix();
