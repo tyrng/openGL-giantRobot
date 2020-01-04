@@ -71,6 +71,55 @@ void cube() {
 	glEnd();
 }
 
+
+void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
+{
+	float x = 0.0;
+	float y = 0.0;
+	float angle = 0.0;
+	float angle_stepsize = 0.1;
+
+	/** Draw the tube */
+	glBegin(GL_QUAD_STRIP);
+	angle = 0.0;
+	while (angle < 2 * M_PI) {
+		x = radius * cos(angle);
+		y = radius * sin(angle);
+		glVertex3f(x, y, height);
+		glVertex3f(x, y, 0.0);
+		angle = angle + angle_stepsize;
+	}
+	glVertex3f(radius, 0.0, height);
+	glVertex3f(radius, 0.0, 0.0);
+	glEnd();
+
+	/** Draw the circle on bottom of cylinder */
+	glColor3ub(sideR, sideG, sideB);
+	glBegin(GL_POLYGON);
+	angle = 0.0;
+	while (angle < 2 * M_PI) {
+		x = radius * cos(angle);
+		y = radius * sin(angle);
+		glVertex3f(x, y, 0);
+		angle = angle + angle_stepsize;
+	}
+	glVertex3f(radius, 0.0, 0);
+	glEnd();
+
+	/** Draw the circle on top of cylinder */
+	glColor3ub(sideR, sideG, sideB);
+	glBegin(GL_POLYGON);
+	angle = 0.0;
+	while (angle < 2 * M_PI) {
+		x = radius * cos(angle);
+		y = radius * sin(angle);
+		glVertex3f(x, y, height);
+		angle = angle + angle_stepsize;
+	}
+	glVertex3f(radius, 0.0, height);
+	glEnd();
+}
+
 void cylinder() {
 	GLUquadricObj *var = NULL;
 	var = gluNewQuadric();

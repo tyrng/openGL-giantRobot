@@ -12,6 +12,8 @@ using namespace std;
 #pragma comment (lib, "OpenGL32.lib")
 #pragma comment (lib, "GLU32.lib")
 
+#define M_PI 3.14159265358979323846
+
 //Head
 void head();
 
