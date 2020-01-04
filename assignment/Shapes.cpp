@@ -79,6 +79,10 @@ void cylinder2(float radius,float height,int sideR,int sideG,int sideB)
 	float angle = 0.0;
 	float angle_stepsize = 0.1;
 
+	glTranslatef(-height / 2, 0, 0);
+	glRotated(-90, 0, 0, 1);
+	glRotated(-90, 1.0, 0, 0);
+
 	/** Draw the tube */
 	glBegin(GL_QUAD_STRIP);
 	angle = 0.0;
