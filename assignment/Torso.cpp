@@ -157,7 +157,13 @@ void waist() {
 	glTranslatef(0.0f, 0.26f, 0.0f);
 	glScalef(0.9, 0.9, 0.85);
 	myWaist();
+}
 
+void buttBones() {
+	glPushMatrix();
+	glColor3f(0.0, 0.16, 0.98);
+	glTranslatef(0.0f, 0.26f, 0.0f);
+	glScalef(0.9, 0.9, 0.85);
 	//Waist Pipe
 	glPushMatrix();
 	glColor3f(0.51, 0.62, 0.85);
@@ -171,9 +177,8 @@ void waist() {
 	glTranslatef(0.0f, -0.12f, 0.0f);
 	cylinder2(0.05, 0.6);
 	glPopMatrix();
-}
+	glPopMatrix();
 
-void buttBones() {
 	GLUquadricObj *var = NULL;
 	var = gluNewQuadric();
 	gluQuadricTexture(var, GL_TRUE);

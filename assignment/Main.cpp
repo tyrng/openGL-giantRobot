@@ -1057,12 +1057,12 @@ void display()
 	glPushMatrix();
 	waist();
 	glPopMatrix();
+	glPopMatrix();// Head to waist
 
 	//Butt bones
 	glPushMatrix();
 	buttBones();
 	glPopMatrix();
-	glPopMatrix();// Head to waist
 
 	//Left Leg
 	glPushMatrix();
