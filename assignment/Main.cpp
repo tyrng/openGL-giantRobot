@@ -935,13 +935,13 @@ void display()
 
 	//For keep repeating animations
 	if (fly) {
-		glTranslatef(0.0, loadTimes/1000, 0.0);
+		glTranslatef(0.0, loadTimes/500, 0.0);
 		glPushMatrix();
 		loadTimes += 1;
-		if (loadTimes == 1000) {
-			glLoadIdentity();
-			loadTimes = 0;
-		}
+		//if (loadTimes == 1000) {
+		//	glLoadIdentity();
+		//	loadTimes = 0;
+		//}
 		glPopMatrix();
 	}
 
@@ -959,14 +959,13 @@ void display()
 
 	if (walk)
 	{
-		glTranslatef(0, 0, -loadTimes / 1000);
+		glTranslatef(0, 0, -loadTimes / 500);
 		glPushMatrix();
 		loadTimes += 1;
-		if (loadTimes == 1000) {
-			glLoadIdentity();
-			loadTimes = 0;
-			shootLaser = 0;
-		}
+		//if (loadTimes == 1000) {
+		//	glLoadIdentity();
+		//	loadTimes = 0;
+		//}
 		glPopMatrix();
 	}
 
