@@ -68,6 +68,8 @@ void resetToFalse() {
 	laser = false;
 }
 
+RECT resolution;
+
 //For texture
 GLuint texture = 0;
 BITMAP BMP;
@@ -1156,8 +1158,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 
 	if (!RegisterClassEx(&wc)) return false;
 
-	HWND hWnd = CreateWindow(WINDOW_TITLE, WINDOW_TITLE, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, 1024, 1024,
+	// Get screen resolution
+	SystemParametersInfo(SPI_GETWORKAREA, 0, &resolution, 0);
+	int width, height;
+	//width = resolution.right - resolution.left;
+	width = GetSystemMetrics(SM_CXSCREEN);
+	//height = resolution.top - resolution.bottom;
+	height = GetSystemMetrics(SM_CYSCREEN);
+	float ratio = (float)width / (float)height;
+
+	HWND hWnd = CreateWindow(WINDOW_TITLE, WINDOW_TITLE, WS_POPUP,
+		CW_USEDEFAULT, CW_USEDEFAULT, width, height,
 		NULL, NULL, wc.hInstance, NULL);
 
 	//--------------------------------
@@ -1188,7 +1199,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	//Set Up Camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-1.0, 1.0, -1.0, 1.0, 1, 100000.0);//Left Right Bottom Top Near Far
+	glViewport(0, 0, width, height);
+	glFrustum(-1.5 * ratio, 1.5 * ratio, -1.5, 1.5, 1, 100000.0);//Left Right Bottom Top Near Far
 	//glOrtho(-10, 10, -10, 10, 1.0, 10.0);//Left Right Bottom Top Near Far
 	glTranslatef(0, -3, -15);
 	glRotatef(180, 0, 1, 0);
@@ -1198,6 +1210,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	//}
 
 	glEnable(GL_DEPTH_TEST);
+
+	HWND hThisWnd = FindWindow(WINDOW_TITLE, WINDOW_TITLE);
+	if (hThisWnd)
+	{
+		LONG lStyle = GetWindowLong(hThisWnd, GWL_STYLE);
+		SetWindowLong(hThisWnd, GWL_STYLE, lStyle &
+			(~(WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU)));
+	}
 
 	while (true)
 	{
