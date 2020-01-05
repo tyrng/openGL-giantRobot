@@ -16,7 +16,7 @@ void upperHand(char position) {
 	glTranslatef(p, 0.6f, 0.0f);
 	glScalef(1.1, 1.1, 1.0);
 	glRotatef(-20, 1.0, 0.0, 0.0);
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.14, 0.04, 0.35);
 	gluCylinder(var, 0.08, 0.04, 0.4, 10, 10);
 	glPopMatrix();
 
@@ -27,7 +27,7 @@ void upperHand(char position) {
 	//Cylinder spikes
 	glTranslatef(p, 0.52f, -0.05f);
 	glRotatef(140, 1.0, 0.0, 0.0);
-	glColor3f(0.6f, 0.6f, 0.6f);
+	glColor3f(0.14, 0.04, 0.35);
 	gluCylinder(var, 0.06, 0.0, 0.12, 6, 6);
 	glPopMatrix();
 	
@@ -50,7 +50,7 @@ void upperHand(char position) {
 	glPushMatrix();
 	glTranslatef(p, 0.6f, 0.0f);
 
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	cylinder2(0.07, 0.29);
 
 	glPopMatrix();
@@ -64,7 +64,7 @@ void upperHand(char position) {
 	glScalef(1.1, 1.1, 1.0);
 	glRotatef(-10, 1.0, 0.0, 0.0);
 
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.0, 0.16, 0.98);
 	gluSphere(var, 0.13, 8, 8);
 
 	glPopMatrix();
@@ -73,13 +73,13 @@ void upperHand(char position) {
 	//BLOCKY ARM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	glPushMatrix();
 
-	glColor3f(0.9f, 0.9f, 0.9f);
 	glRotatef(-10, 1.0, 0.0, 0.0);
 	glTranslatef(p-0.07f, 0.165f, 0.10f);
 	glScalef(0.65, 0.65, 0.65);
 
 	//cuboid!@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	glColor3f(0.9f, 0.9f, 0.9f);
+
+	glColor3f(0.4, 0.4, 0.98);
 
 	float x1 = 0.0, y1 = 0.45,
 		x2 = 0.22, y2 = 0.45,
@@ -95,7 +95,7 @@ void upperHand(char position) {
 	//ADDITIONAL ARMOUR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! COME AND CHECK ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	glPushMatrix();
 
-	glColor3f(0.6f, 0.6f, 0.6f);
+	glColor3f(0.14, 0.04, 0.35);
 	glRotatef(-25, 1.0, 0.0, 0.0);
 	glTranslatef(p - 0.04f, 0.23f, 0.14f);
 	glScalef(0.4, 0.4, 0.4);
@@ -133,7 +133,7 @@ void lowerHand(char position) {
 	gluQuadricTexture(var, GL_TRUE);
 
 	glPushMatrix();
-	glColor3f(0.4f, 0.05f, 0.05f);
+	glColor3f(0.0, 0.16, 0.98);
 
 	glTranslatef(p, 0.25f, 0.05f);
 
@@ -141,7 +141,7 @@ void lowerHand(char position) {
 	glRotatef(90, 1.0, 0.0, 0.0);
 	gluCylinder(var, 0.1, 0.06, 0.3, 10, 10);
 
-	glColor3f(0.7f, 0.05f, 0.05f);
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, 0.05f, 0.0f);
 	glScalef(1.0, 0.53, 1.0);
 	glRotatef(140, 1.0, 0.0, 0.0);
@@ -152,7 +152,7 @@ void lowerHand(char position) {
 	glPushMatrix();
 
 	glTranslatef(p, 0.25f, 0.05f);
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	cylinder2(0.05, 0.21);
 
 
@@ -226,7 +226,7 @@ void lowerHand(char position) {
 	glPushMatrix();
 	glTranslatef(p, 0.12f, -0.019f);
 
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.14, 0.04, 0.35);
 	gluSphere(var, 0.04, 16, 16);
 
 	glPopMatrix();
@@ -235,7 +235,7 @@ void lowerHand(char position) {
 	glPushMatrix();
 	glTranslatef(p, -0.07f, 0.052f);
 
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	cylinder2(0.04, 0.15);
 
 	glPopMatrix();
@@ -244,7 +244,7 @@ void lowerHand(char position) {
 	//PALMS WEAK ARMS A HEAVY MOMS SPAGETTTTT!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	glPushMatrix();
 
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.14, 0.04, 0.35);
 	glRotatef(10, 1.0, 0, 0);
 	glTranslatef(p - 0.0718, -0.083f, 0.018f);
 	glScalef(0.35, 0.35, 0.35);
@@ -289,7 +289,7 @@ void palm(char position) {
 
 	//Palm MAGICCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 	glPushMatrix();
-	glColor3f(0.6f, 0.2f, 0.2f);
+	glColor3f(0.0, 0.16, 0.98);
 	glTranslatef(p*0.39, -0.07f, 0.05f);
 	glRotatef(-98, 0.0, 1.0, 0.0);
 	glRotatef(p, 1.0, 0.0, 0.0);
@@ -328,14 +328,14 @@ void fingers(float angleM, float angleD, char position) {
 
 	//Fingers
 	glPushMatrix();
-	glColor3f(0.6f, 0.2f, 0.2f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(p*0.39, -0.07f, 0.05f);
 	glRotatef(-100, 0.0, 1.0, 0.0);
 	glRotatef(p * 5, 1.0, 0.0, 0.0);
 
 	//Thumb
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(-0.06f, -0.16f, 0.0f);
 	glRotatef(-10, 0.0, 0.0, 1.0);
 	glRotatef(n * angleM, 1.0, 0.0, 0.0);
@@ -348,7 +348,7 @@ void fingers(float angleM, float angleD, char position) {
 
 	//Index finger
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(-0.04f, -0.2f, 0.0f);
 	//glRotatef(n * angleM, 1.0, 0.0, 0.0);
 	myFinger(0.05);
@@ -361,7 +361,7 @@ void fingers(float angleM, float angleD, char position) {
 
 	//Middle finger
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(-0.01f, -0.2f, 0.0f);
 	glRotatef(n * angleM, 1.0, 0.0, 0.0);
 	myFinger(0.05);
@@ -374,7 +374,7 @@ void fingers(float angleM, float angleD, char position) {
 
 	//Ring finger
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(0.02f, -0.2f, 0.0f);
 	glRotatef(n * angleM, 1.0, 0.0, 0.0);
 	myFinger(0.05);
@@ -387,7 +387,7 @@ void fingers(float angleM, float angleD, char position) {
 
 	//Pinkie
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(0.05f, -0.2f, 0.0f);
 	glRotatef(n * angleM, 1.0, 0.0, 0.0);
 	myFinger(0.05);

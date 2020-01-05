@@ -15,14 +15,14 @@ void upperLeg(char position) {
 	glPushMatrix();
 	glTranslatef(p*0.12f, -0.39f, 0.0f);
 	glScalef(0.8, 0.6, 0.8);
-	glColor3f(0.4f, 0.05f, 0.05f);
+	glColor3f(0.2f, 0.2f, 0.2f);
 	glTranslatef(0.0f, 0.91f, 0.02f);
 	gluSphere(var, 0.125, 8, 8);
 	glPopMatrix();
 
 	//Upper Leg (ULTRA PLATED LEG EXPANSION TO THE MAX SUZUKI MAYO NIECE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
 	glPushMatrix();
-	glColor3f(0.47f, 0.05f, 0.05f);
+	glColor3f(0.4, 0.4, 0.98);
 
 	glTranslatef((p*0.142) - 0.074, 0.11f, 0.0f);
 
@@ -43,7 +43,7 @@ void upperLeg(char position) {
 
 	//Upper CROSS CUT FAN PART !!!!!!!!!!!!!!!!!!!!!
 	glPushMatrix();
-	glColor3f(0.8f, 0.5f, 0.5f);
+	glColor3f(0.14, 0.04, 0.35);
 
 	glTranslatef((p*0.142) - 0.076, -0.15f, 0.0f);
 
@@ -63,7 +63,7 @@ void upperLeg(char position) {
 
 	//Upper JOINT bone structyre BY ONG JON SHEN ITS ME? DUHH !!!!!!!!!!!!!!!!!!!!!
 	glPushMatrix();
-	glColor3f(0.47f, 0.05f, 0.05f);
+	glColor3f(0.4, 0.4, 0.98);
 
 	glTranslatef((p*0.142) - 0.074, -0.05f, -0.03f);
 
@@ -84,7 +84,7 @@ void upperLeg(char position) {
 	//UPPER LEGGGG ElboW JOINT CYLINDERRRRRRRRRRRRRRRRRRRRRRRRRR
 	glPushMatrix();
 	
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef((p*0.142), -0.14f, -0.01f);
 	cylinder2(0.06, 0.175);
 
@@ -113,7 +113,7 @@ void lowerLeg(char position) {
 	
 	//Front
 	glPushMatrix();
-	glColor3f(0.8f, 0.5f, 0.5f);
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, 0.032f, -0.04f);
 	glScalef(1.05, 1.56, 0.75);
 	glRotatef(77, 1.0, 0.0, 0.0);
@@ -122,7 +122,7 @@ void lowerLeg(char position) {
 
 	//Back Boneeeee HEEEEEEEEEEEEEEEEEEEEEEEHEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	glPushMatrix();
-	glColor3f(0.6f, 0.05f, 0.05f);
+	glColor3f(0.0, 0.16, 0.98);
 	glScalef(0.74, 0.87, 0.63);
 	glTranslatef(-0.099f, 0.13f, -0.00f);
 	glRotatef(181, 1.0, 0.0, 0.0);
@@ -139,7 +139,7 @@ void lowerLeg(char position) {
 
 	//LOWER SHIELD ANKLEEEEE H0000000000000000000000000000000000000000000000000000
 	glPushMatrix();
-	glColor3f(0.8f, 0.8f, 0.8f);
+	glColor3f(0.14, 0.04, 0.55);
 	glScalef(0.95, 0.15, 0.63);
 	glTranslatef(0.0003f, -1.85f, -0.15f);
 
@@ -162,8 +162,7 @@ void lowerLeg(char position) {
 
 	//UPPER LEGGGG ElboW JOINT CYLINDERRRRRRRRRRRRRRRRRRRRRRRRRR
 	glPushMatrix();
-
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef((p*0.142), -0.3f, -0.008f);
 	cylinder2(0.06, 0.175);
 
@@ -206,7 +205,7 @@ void feet(char position) {
 	//Left Feet
 	//Feet
 	glPushMatrix();
-	glColor3f(0.4f, 0.05f, 0.05f);
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, -0.54f, 0.0f);
 	glRotatef(90, 0.0, 1.0, 0.0);
 	glRotatef(90, 1.0, 0.0, 0.0);
@@ -217,7 +216,7 @@ void feet(char position) {
 	glPopMatrix();
 	//Ankle
 	glPushMatrix();
-	glColor3f(0.7f, 0.7f, 0.07f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(0.0f, -0.45f, 0.05f);
 	glScalef(0.6, 1.4, 1.4);
 	glRotatef(-90, 1.0, 0.0, 0.0);
@@ -225,7 +224,7 @@ void feet(char position) {
 	glPopMatrix();
 	//Toe
 	glPushMatrix();
-	glColor3f(0.7f, 0.05f, 0.05f);
+	glColor3f(0.86, 0.77, 0.65);
 	glTranslatef(0.0f, -0.44f, -0.08f);
 	glRotatef(-130, 1.0, 0.0, 0.0);
 	glScalef(0.5, 1.0, 1.0);

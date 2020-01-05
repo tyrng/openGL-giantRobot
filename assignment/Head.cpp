@@ -14,13 +14,14 @@ void head() {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.27f, 0.0f);
 	glRotatef(-90, 0, 0, 1);
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.0, 0.16, 0.98);
 	cylinder2(0.15, 0.5);
 	glPopMatrix();
 
 	//Headplate
 	glPushMatrix();
 	glRotatef(90, 1, 0, 0);
+	glColor3f(0.51, 0.62, 0.85);
 	float 
 		x1 = 0.15, y1 = 0.2,
 		x2 = 0.0, y2 = 0.4,
@@ -66,7 +67,7 @@ void head() {
 
 	//Peacock
 	glPushMatrix();
-	glColor3f(0.3f, 0.3f, 0.3f);
+	glColor3f(0.14, 0.04, 0.35);
 		x1 = 0.025, y1 = 0.1,
 		x2 = -0.025, y2 = 0.1,
 		x3 = -0.025, y3 = 0.55,

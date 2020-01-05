@@ -8,7 +8,7 @@ void body() {
 
 	//upper body
 	glPushMatrix();
-	glColor3f(0.4f, 0.05f, 0.05f);
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, 0.65f, 0.0f);
 	glScalef(1.2, 1.2, 1.0);
 	float x1 = 0.15, y1 = 0.05,
@@ -25,10 +25,11 @@ void body() {
 
 	//Body pyramids
 	glPushMatrix();
-	glColor3f(0.7f, 0.35f, 0.35f);
+	glColor3f(0.51, 0.62, 0.85);
 
 	//Top Pyramid
 	glPushMatrix();
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, 0.60f, -0.1f);
 	glRotatef(-167, 1.0, 0, 0);
 	glScalef(0.45, 0.125, 0.325);
@@ -37,6 +38,7 @@ void body() {
 
 	//Middle Pyramid
 	glPushMatrix();
+	glColor3f(0.11, 0.12, 0.55);
 	glTranslatef(0.0f, 0.475f, -0.1f);
 	glRotatef(-153, 1.0, 0, 0);
 	glScalef(0.35, 0.125, 0.3);
@@ -45,6 +47,7 @@ void body() {
 
 	//Bottom Pyramid
 	glPushMatrix();
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(0.0f, 0.35f, -0.1f);
 	glRotatef(-140, 1.0, 0, 0);
 	glScalef(0.25, 0.125, 0.25);
@@ -55,28 +58,28 @@ void body() {
 
 	//Top Pipe
 	glPushMatrix();
-	glColor3f(0.7f, 0.7f, 0.7f);
+	glColor3f(0.8, 0.8, 0.8);
 	glTranslatef(0.0f, 0.62f, -0.16f);
 	cylinder2(0.03, 0.42);
 	glPopMatrix();
 
 	//Middle Pipe
 	glPushMatrix();
-	glColor3f(0.7f, 0.7f, 0.7f);
+	glColor3f(0.8, 0.8, 0.8);
 	glTranslatef(0.0f, 0.515f, -0.16f);
 	cylinder2(0.03, 0.31);
 	glPopMatrix();
 
 	//Bottom Pipe
 	glPushMatrix();
-	glColor3f(0.7f, 0.7f, 0.7f);
+	glColor3f(0.8, 0.8, 0.8);
 	glTranslatef(0.0f, 0.4f, -0.16f);
 	cylinder2(0.03, 0.23);
 	glPopMatrix();
 
 	//Left Pipe
 	glPushMatrix();
-	glColor3f(0.2f, 0.2f, 0.2f);
+	glColor3f(0.4, 0.4, 0.98);
 	glTranslatef(-0.17f, 0.48f, -0.1f);
 	glRotated(107,0, 0, 1);
 	cylinder2(0.06, 0.38);
@@ -84,7 +87,7 @@ void body() {
 
 	//Right Pipe
 	glPushMatrix();
-	glColor3f(0.2f, 0.2f, 0.2f);
+	glColor3f(0.4, 0.4, 0.98);
 	glTranslatef(0.17f, 0.48f, -0.1f);
 	glRotated(-107, 0, 0, 1);
 	cylinder2(0.06, 0.38);
@@ -92,16 +95,16 @@ void body() {
 
 	//Back Pyramid
 	glPushMatrix();
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, 0.65f, 0.15f);
 	glScalef(0.5, 0.35, 0.2);
 	glRotatef(100, 1.0, 0, 0);
-	glColor3f(0.7f, 0.35f, 0.35f);
 	pyramid();
 	glPopMatrix();
 
 	//Back Left Pipe
 	glPushMatrix();
-	glColor3f(0.2f, 0.2f, 0.2f);
+	glColor3f(0.4, 0.4, 0.98);
 	glTranslatef(0.17f, 0.44f, 0.11f);
 	glRotated(20, 1, 0, 0);
 	glRotated(-107, 0, 0, 1);
@@ -110,7 +113,7 @@ void body() {
 
 	//Back Right Pipe
 	glPushMatrix();
-	glColor3f(0.2f, 0.2f, 0.2f);
+	glColor3f(0.4, 0.4, 0.98);
 	glTranslatef(-0.17f, 0.44f, 0.11f);
 	glRotated(20, 1, 0, 0);
 	glRotated(107, 0, 0, 1);
@@ -150,21 +153,21 @@ void myWaist() {
 }
 
 void waist() {
-	glColor3f(0.6f, 0.2f, 0.2f);
+	glColor3f(0.0, 0.16, 0.98);
 	glTranslatef(0.0f, 0.26f, 0.0f);
 	glScalef(0.9, 0.9, 0.85);
 	myWaist();
 
 	//Waist Pipe
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.51, 0.62, 0.85);
 	glTranslatef(0.0f, -0.12f, 0.0f);
 	cylinder2(0.07, 0.55);
 	glPopMatrix();
 
 	//Small Waist Pipe
 	glPushMatrix();
-	glColor3f(0.5f, 0.5f, 0.5f);
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(0.0f, -0.12f, 0.0f);
 	cylinder2(0.05, 0.6);
 	glPopMatrix();
@@ -176,7 +179,7 @@ void buttBones() {
 	gluQuadricTexture(var, GL_TRUE);
 
 	glPushMatrix();
-	glColor3f(0.9f, 0.9f, 0.9f);
+	glColor3f(0.14, 0.04, 0.35);
 	glTranslatef(-0.06f, 0.18f, 0.0f);
 	glScalef(0.6, 0.6, 0.6);
 
