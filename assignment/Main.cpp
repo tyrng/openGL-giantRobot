@@ -46,9 +46,9 @@ char direction = 'U';
 //For animation
 boolean animationON = false;
 float angle1 = 0.0, angle2 = 0.0, angle3 = 0.0;
-boolean walk = false, fly = false, playBall = false, attack = false, bow = false, star = false, swag = false, laser = false, pushUp = false, wearHat = false;
+boolean walk = false, fly = false, attack = false, bow = false, laser = false;
 boolean dir = 1; //direction
-int loadTimes = 0;
+float loadTimes = 0;
 float ballX = 0.05, ballY = 0;
 int attackPhase = 1;
 float shieldy = 0.0f;
@@ -60,21 +60,18 @@ void resetToFalse() {
 	walk = false;
 	fly = false;
 	loadTimes = 0;
-	playBall = false;
 	ballX = 0.05;
 	ballY = 0;
 	attack = false;
 	bow = false;
-	star = false;
 	laser = false;
-	pushUp = false;
 }
 
 //For texture
 GLuint texture = 0;
 BITMAP BMP;
 HBITMAP hBMP = NULL;
-int texturePattern = 0;
+int texturePattern = 7;
 static int TOTAL_TEXTURE_PATTERN = 8;
 
 //For lighting
@@ -84,6 +81,14 @@ float lightz = -5.0; // - infront, + go back
 GLfloat ambientLight[] = { 0.3, 0.3, 0.3, 1.0 }; //RGBA
 GLfloat diffuseLight[] = { 0.3, 0.3, 0.3, 1.0 }; //RGBA
 boolean lightOn = false;
+string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp","brick.bmp", "metal.bmp","wood.bmp" };
+int textureEnvironmentIndex = 1;
+std::string environmentTopTextureArray[] = { "environmentTexture/classmplanet_up.bmp", "environmentTexture/drakeq_up.bmp", "environmentTexture/frozen_up.bmp", "environmentTexture/sandcastle_up.bmp"};
+std::string environmentBottomTextureArray[] = { "environmentTexture/classmplanet_dn.bmp", "environmentTexture/drakeq_dn.bmp", "environmentTexture/frozen_dn.bmp", "environmentTexture/sandcastle_dn.bmp" };
+std::string environmentLeftTextureArray[] = { "environmentTexture/classmplanet_rt.bmp", "environmentTexture/drakeq_rt.bmp", "environmentTexture/frozen_rt.bmp", "environmentTexture/sandcastle_rt.bmp" };
+std::string environmentRightTextureArray[] = { "environmentTexture/classmplanet_lf.bmp", "environmentTexture/drakeq_lf.bmp", "environmentTexture/frozen_lf.bmp", "environmentTexture/sandcastle_lf.bmp" };
+std::string environmentFrontTextureArray[] = { "environmentTexture/classmplanet_bk.bmp", "environmentTexture/drakeq_bk.bmp", "environmentTexture/frozen_bk.bmp", "environmentTexture/sandcastle_bk.bmp" };
+std::string environmentBackTextureArray[] = { "environmentTexture/classmplanet_ft.bmp", "environmentTexture/drakeq_ft.bmp", "environmentTexture/frozen_ft.bmp", "environmentTexture/sandcastle_ft.bmp" };
 
 void clear() {
 
@@ -341,36 +346,29 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		{
 			bodyParts = 'T';
 		}
-		else if (wParam == 0x30) /*0*/ { clear(); animationON = true;  walk = true; }
-		else if (wParam == 0x31) /*1*/ { clear(); animationON = true; fly = true; }
-		else if (wParam == 0x32) /*2*/ { clear(); animationON = true; playBall = true; }
-		else if (wParam == 0x33) /*3*/ { clear(); animationON = true; attack = true; }
-		else if (wParam == 0x34) /*4*/ { clear(); animationON = true; bow = true; }
-		else if (wParam == 0x35) /*5*/ { clear(); animationON = true; star = true; }
-		else if (wParam == 0x36) /*6*/ { clear(); animationON = true; laser = true; }
-		else if (wParam == 0x37) /*7*/ { clear(); animationON = true; pushUp = true; }
-		else if (wParam == 0x38) /*8*/ {
-			animationON = true;
-			if (wearHat == false) { wearHat = true; }
-			else wearHat = false;
-		}
-		else if (wParam == 0x39) /*9*/ {
-			animationON = true;
-			if (swag == false) { swag = true; }
-			else swag = false;
-		}
+		else if (wParam == 0x30) /*0*/ { }
+		else if (wParam == 0x31) /*1*/ { clear(); animationON = true; bow = true;   }
+		else if (wParam == 0x32) /*2*/ { clear(); animationON = true; walk = true; }
+		else if (wParam == 0x33) /*3*/ { clear(); animationON = true; fly = true;  }
+		else if (wParam == 0x34) /*4*/ { clear(); animationON = true; attack = true; }
+		else if (wParam == 0x35) /*5*/ { clear(); animationON = true; laser = true; }
+		else if (wParam == 0x36) /*6*/ { }
+		else if (wParam == 0x37) /*7*/ { }
+		else if (wParam == 0x38) /*8*/ { }
+		else if (wParam == 0x39) /*9*/ { }
 
-		else if (wParam == VK_CONTROL) /*CTRL - change texture*/ { if (texturePattern < TOTAL_TEXTURE_PATTERN) { texturePattern++; } else { texturePattern = 0; } }
+		else if (wParam == VK_CONTROL) /*CTRL - change texture*/ { if (texturePattern < TOTAL_TEXTURE_PATTERN) { texturePattern++; } else { texturePattern = 1; } }
+		else if (wParam == VK_RETURN) /*CTRL - change environment*/ { if (textureEnvironmentIndex < (sizeof(environmentBackTextureArray) / sizeof(*environmentBackTextureArray))-1) { textureEnvironmentIndex++; } else { textureEnvironmentIndex = 0; } }
 		else if (wParam == VK_TAB) /*TAB - change lighting*/ { lightOn = !lightOn; }
 
-		else if (wParam == VK_RETURN) { cameraOn = !cameraOn; lightz = -lightz; }
+		//else if (wParam == VK_RETURN) { cameraOn = !cameraOn; lightz = -lightz; }
 		else if (wParam == VK_ADD) { if (cameraOn) { camera += 0.1; } }
 		else if (wParam == VK_SUBTRACT) { if (cameraOn) { camera -= 0.1; } }
 
 		else if (wParam == VK_SPACE)
 		{
 			glPushMatrix();
-			glLoadIdentity();
+			glLoadIdentity(); 
 			glPopMatrix();
 			wholeBodyAngleX = 0.0;
 			wholeBodyAngleY = 0.0;
@@ -391,14 +389,15 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			bodyParts = 'A';
 
 			//close texture
-			texturePattern = 0;
+			texturePattern = 7;
+			textureEnvironmentIndex = 1;
 
 			//stop animation
 			animationON = false;
 			angle1 = 0.0;
 			dir = 1;
 			resetToFalse();
-			glLoadIdentity();
+			glLoadIdentity(); 
 			attackPhase = 1;
 			shieldy = 0.0f;
 			shieldz = 0.0f;
@@ -467,7 +466,30 @@ void deleteTexture(GLuint texture) {
 	//Step 5: Remove texture info.
 	DeleteObject(hBMP);
 	glDeleteTextures(1, &texture);
+}
 
+//Funtion to load bmp image as texture
+void loadBitmapImage(const char *filename) {
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	hBMP = (HBITMAP)LoadImage(GetModuleHandle(NULL), filename, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
+	GetObject(hBMP, sizeof(BMP), &BMP);
+
+
+	glEnable(GL_TEXTURE_2D);
+
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, BMP.bmWidth, BMP.bmHeight, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, BMP.bmBits);
+}
+//Function to end texture
+void endTexture() {
+	glDisable(GL_TEXTURE_2D);
+	DeleteObject(hBMP);
+	glDeleteTextures(1, &texture);
 }
 
 //(1)Interactive Functions
@@ -579,36 +601,6 @@ void walkON() {
 	if (dir) angle1 += 0.5; else angle1 -= 0.5;
 }
 
-void pushUpON() {
-	glColor3f(0.1f, 0.1f, 0.1f);
-	glPushMatrix();
-	glTranslatef(0.05f, 0.0f, 0.0f);
-	glRotatef(-3, 0, 0, 1);
-	myYogaMat();
-	glPopMatrix();
-	//To position
-	if (angle1 > -90) {
-		angle1 -= 0.5;
-	}
-	if (angle2 > -70) {
-		angle2 -= 0.5;
-	}
-	glRotatef(angle1, 0, 1, 0);
-	glRotatef(angle2, 1, 0, 0);
-
-	//Push up and down
-	if (angle1 <= -90 || angle2 <= -70) {
-		if (angle3 >= 5 || angle3 <= -15) {
-			dir = !dir;
-		}
-		if (dir) { angle3 += 0.2; } //if up
-		else { angle3 -= 0.2; } // if down
-		glTranslatef(0, -0.6, 0);
-		glRotatef(angle3, 1, 0, 0);
-		glTranslatef(0, 0.6, 0);
-	}
-}
-
 void spinON() {
 	angle1 += 10; //upper body keep spin
 
@@ -618,18 +610,6 @@ void spinON() {
 	if (OangleX <= -10 || OangleX >= 0) { dir = !dir; }
 	if (dir) { OangleX += 0.05; LangleX += 0.05; }
 	else { OangleX -= 0.05; LangleX -= 0.05; }
-}
-
-int ballMove = 0;
-boolean bounceBack = 0;
-
-void playBallON() {
-	if (UangleY <= -30 || UangleY >= 0) { dir = !dir; }
-	if (dir) { UangleY += 0.12; }
-	else { UangleY -= 0.12; }
-	if (ballX <= 0.05 || ballX >= 0.3) { bounceBack = !bounceBack; }
-	if (bounceBack) { ballX += 0.001; ballY -= 0.0025; }
-	else { ballX -= 0.001; ballY += 0.0025; }
 }
 
 void attackON() {
@@ -760,24 +740,6 @@ void bowON() {
 	else { BangleX -= 0.5; }
 }
 
-void starON() {
-	if (QangleY <= -90 && AangleY >= 90) { dir = !dir; }
-	if (dir) { QangleY += 0.2; AangleY -= 0.2; SangleY += 0.1; KangleY -= 0.1; }
-	else { QangleY -= 0.2; AangleY += 0.2; SangleY -= 0.1; KangleY += 0.1; }
-
-	if (QangleY <= 180 && AangleY >= 180) { dir = !dir; }
-	if (dir) { QangleY -= 0.2; AangleY += 0.2; SangleY += 0.1; KangleY -= 0.1; }
-	else { QangleY += 0.2; AangleY -= 0.2; SangleY -= 0.1; KangleY += 0.1; }
-
-	if (QangleY <= -90 && AangleY >= 90) { dir = !dir; }
-	if (dir) { QangleY += 0.2; AangleY -= 0.2; SangleY -= 0.1; KangleY += 0.1; }
-	else { QangleY -= 0.2; AangleY += 0.2; SangleY += 0.1; KangleY -= 0.1; }
-
-	if (QangleY >= 0 && AangleY <= 0) { dir = !dir; }
-	if (dir) { QangleY += 0.2; AangleY -= 0.2; SangleY += 0.1; KangleY -= 0.1; }
-	else { QangleY -= 0.2; AangleY += 0.2; SangleY -= 0.1; KangleY += 0.1; }
-}
-
 float shootLaser = 0.0;
 void laserON() {
 	boolean firstRun = false;
@@ -799,6 +761,96 @@ void laserON() {
 	if (shootLaser != 0.01) {
 		shootLaser -= 0.001;
 	}
+}
+void environment() {
+	glColor3f(1, 1, 1);
+	glTranslatef(0.0, 9.23, 0);
+	glScalef(30.0, 10.0, 30.0);
+	glPushMatrix();
+	loadBitmapImage(environmentTopTextureArray[textureEnvironmentIndex].data());
+	glBegin(GL_QUADS);
+	{
+		// Top Face
+		glTexCoord2f(0, 0); glVertex3f(-1.0f, 1.0f, -1.0f);
+		glTexCoord2f(1, 0); glVertex3f(1.0f, 1.0f, -1.0f);
+		glTexCoord2f(1, 1); glVertex3f(1.0f, 1.0f, 1.0f);
+		glTexCoord2f(0, 1); glVertex3f(-1.0f, 1.0f, 1.0f);
+	}
+	glEnd();
+	endTexture();
+	glPopMatrix();
+
+	glPushMatrix();
+	loadBitmapImage(environmentLeftTextureArray[textureEnvironmentIndex].data());
+	glBegin(GL_QUADS);
+	{
+		// Left Face
+		glTexCoord2f(1, 1); glVertex3f(-1.0f, 1.0f, -1.0f);
+		glTexCoord2f(0, 1); glVertex3f(-1.0f, 1.0f, 1.0f);
+		glTexCoord2f(0, 0); glVertex3f(-1.0f, -1.0f, 1.0f);
+		glTexCoord2f(1, 0); glVertex3f(-1.0f, -1.0f, -1.0f);
+	}
+	glEnd();
+	endTexture();
+	glPopMatrix();
+
+	glPushMatrix();
+	loadBitmapImage(environmentBackTextureArray[textureEnvironmentIndex].data());
+	glBegin(GL_QUADS);
+	{
+		// Back Face
+		glTexCoord2f(0, 0); glVertex3f(-1.0f, -1.0f, -1.0f);
+		glTexCoord2f(1, 0); glVertex3f(1.0f, -1.0f, -1.0f);
+		glTexCoord2f(1, 1); glVertex3f(1.0f, 1.0f, -1.0f);
+		glTexCoord2f(0, 1); glVertex3f(-1.0f, 1.0f, -1.0f);
+
+	}
+	glEnd();
+	endTexture();
+	glPopMatrix();
+
+	glPushMatrix();
+	loadBitmapImage(environmentRightTextureArray[textureEnvironmentIndex].data());
+	glBegin(GL_QUADS);
+	{
+		// Right Face
+		glTexCoord2f(1, 1); glVertex3f(1.0f, 1.0f, 1.0f);
+		glTexCoord2f(0, 1); glVertex3f(1.0f, 1.0f, -1.0f);
+		glTexCoord2f(0, 0); glVertex3f(1.0f, -1.0f, -1.0f);
+		glTexCoord2f(1, 0); glVertex3f(1.0f, -1.0f, 1.0f);
+	}
+	glEnd();
+	endTexture();
+	glPopMatrix();
+
+	glPushMatrix();
+	loadBitmapImage(environmentBottomTextureArray[textureEnvironmentIndex].data());
+	glBegin(GL_QUADS);
+	{
+		// Bottom Face
+		glTexCoord2f(0, 0); glVertex3f(-1.0f, -1.0f, 1.0f);
+		glTexCoord2f(1, 0); glVertex3f(1.0f, -1.0f, 1.0f);
+		glTexCoord2f(1, 1); glVertex3f(1.0f, -1.0f, -1.0f);
+		glTexCoord2f(0, 1); glVertex3f(-1.0f, -1.0f, -1.0f);
+	}
+	glEnd();
+	endTexture();
+	glPopMatrix();
+
+	glPushMatrix();
+	loadBitmapImage(environmentFrontTextureArray[textureEnvironmentIndex].data());
+	glBegin(GL_QUADS);
+	{
+		// Front Face
+		glTexCoord2f(1, 1); glVertex3f(-1.0f, 1.0f, 1.0f);
+		glTexCoord2f(0, 1); glVertex3f(1.0f, 1.0f, 1.0f);
+		glTexCoord2f(0, 0); glVertex3f(1.0f, -1.0f, 1.0f);
+		glTexCoord2f(1, 0); glVertex3f(-1.0f, -1.0f, 1.0f);
+	}
+	glEnd();
+	endTexture();
+	glPopMatrix();
+
 }
 
 void display()
@@ -832,7 +884,6 @@ void display()
 	}
 
 	if (texturePattern > 0) {
-		string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp","brick.bmp", "metal.bmp","wood.bmp" };
 
 		//Step 3: Initialize texture info
 		glEnable(GL_TEXTURE_2D);
@@ -868,40 +919,55 @@ void display()
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+			glLoadIdentity(); 
 		}
 	}
 
+	glPushMatrix();
+	glScalef(camera, camera, camera);
+	glTranslatef(-wholeBodyTranslateX, wholeBodyTranslateY, 0);
+	glRotatef(-wholeBodyAngleX, 1, 0, 0);
+	glRotatef(-wholeBodyAngleY, 0, 1, 0);
+	//glRotatef(wholeBodyAngleZ, 0, 0, 1);
+	glScalef(0.5, 0.5, 0.5);
+
+	glPushMatrix();
+
 	//For keep repeating animations
 	if (fly) {
-		glTranslatef(0.0, 0.001, 0.0);
+		glTranslatef(0.0, loadTimes/1000, 0.0);
+		glPushMatrix();
 		loadTimes += 1;
 		if (loadTimes == 1000) {
 			glLoadIdentity();
 			loadTimes = 0;
 		}
+		glPopMatrix();
 	}
 
 	if (laser) {
-		glTranslatef(-0.001, 0, 0);
+		glTranslatef(-loadTimes/1000, 0, 0);
+		glPushMatrix();
 		loadTimes += 1;
 		if (loadTimes == 600) {
 			glLoadIdentity();
 			loadTimes = 0;
 			shootLaser = 0;
 		}
+		glPopMatrix();
 	}
 
-	glPushMatrix();
-	glScalef(camera, camera, camera);
-	glTranslatef(wholeBodyTranslateX, wholeBodyTranslateY, 0);
-	glRotatef(wholeBodyAngleX, 1, 0, 0);
-	glRotatef(wholeBodyAngleY, 0, 1, 0);
-	glRotatef(wholeBodyAngleZ, 0, 0, 1);
-	glScalef(0.5, 0.5, 0.5);
-
-	if (pushUp) {
-		pushUpON();
+	if (walk)
+	{
+		glTranslatef(0, 0, -loadTimes / 1000);
+		glPushMatrix();
+		loadTimes += 1;
+		if (loadTimes == 1000) {
+			glLoadIdentity();
+			loadTimes = 0;
+			shootLaser = 0;
+		}
+		glPopMatrix();
 	}
 
 	//Head
@@ -921,19 +987,6 @@ void display()
 		spinON();
 		moveBody(0, angle1 / 3);
 	}
-	if (playBall) {
-		glPushMatrix();
-		RangleX = 50;
-		RangleY = -20;
-		glPopMatrix();
-		glPushMatrix();
-		glTranslatef(-0.5, 0, -0.35);
-		glTranslatef(ballX, ballY, 0);
-		ball();
-		glPopMatrix();
-
-		playBallON();
-	}
 	if (attack) {
 		glPushMatrix();
 		attackON();
@@ -943,13 +996,6 @@ void display()
 		glPushMatrix();
 		bowON();
 		glPopMatrix();
-		swag = false;
-		wearHat = false;
-	}
-	if (star) {
-		glPushMatrix();
-		starON();
-		glPopMatrix();
 	}
 	if (laser) {
 		glPushMatrix();
@@ -958,18 +1004,6 @@ void display()
 		glPushMatrix();
 		glTranslatef(0, 0, shootLaser);
 		lasers();
-		glPopMatrix();
-	}
-	if (swag) {
-		glPushMatrix();
-		glTranslatef(-0.2, 0.55, -0.1);
-		glScalef(0.2, 0.2, 0.2);
-		sunglasses();
-		glPopMatrix();
-	}
-	if (wearHat) {
-		glPushMatrix();
-		topHat();
 		glPopMatrix();
 	}
 
@@ -989,18 +1023,15 @@ void display()
 	//Left Upper Hand
 	glPushMatrix();
 	if (walk) { moveArm(-angle1 / 2, 0, 0, 'L'); }
-	if (pushUp) { moveArm(-angle1, 0, -80, 'L');  if (angle3 < 0) moveArm(angle3 * 6, 0, 0, 'L'); }
 	moveArm(QangleX, QangleY, 0, 'L');
 	upperHand('L');
 
 	//Left Lower Hand
-	if (pushUp) { if (angle3 < 0) moveLowerArm(-angle3 * 6, 0, 'L'); }
 	moveLowerArm(10, 0, 'L');
 	moveLowerArm(RangleX, RangleY, 'L');
 	lowerHand('L');
 
 	//Palm
-	if (pushUp) { movePalm(0, angle1 / 2, angle1 / 2, 'L'); if (angle3 < 0) movePalm(0, angle3 * 2, 0, 'L'); }
 	movePalm(UangleX, UangleY, 0, 'L');
 	palm('L');
 	fingers(IMangle, IDangle, 'L');
@@ -1009,18 +1040,15 @@ void display()
 	//Right Upper Hand
 	glPushMatrix();
 	if (walk) { moveArm(angle1 / 2, 0, 0, 'R'); }
-	if (pushUp) { moveArm(-angle1, 0, 80, 'R'); if (angle3 < 0) moveArm(angle3 * 6, 0, 0, 'R'); }
 	moveArm(AangleX, AangleY, 0, 'R');
 	upperHand('R');
 
 	//Right Lower Hand
-	if (pushUp) { if (angle3 < 0) moveLowerArm(-angle3 * 6, 0, 'R'); }
 	moveLowerArm(10, 0, 'R');
 	moveLowerArm(EangleX, EangleY, 'R');
 	lowerHand('R');
 
 	//Palm
-	if (pushUp) { movePalm(0, -angle1 / 2, -angle1 / 2, 'R'); if (angle3 < 0) movePalm(0, -angle3 * 2, 0, 'R'); }
 	movePalm(PangleX, PangleY, 0, 'R');
 	palm('R');
 	fingers(FMangle, FDangle, 'R');
@@ -1071,12 +1099,17 @@ void display()
 	feet('R');
 	glPopMatrix();
 
+	endTexture();
+	glPopMatrix();
+	environment();
+
 	glPopMatrix();
 
+
 	//Step 5: Remove texture info.
-	glDisable(GL_TEXTURE_2D);
-	DeleteObject(hBMP);
-	glDeleteTextures(1, &texture);
+	//glDisable(GL_TEXTURE_2D);
+	//DeleteObject(hBMP);
+	//glDeleteTextures(1, &texture);
 
 	//disable lighting
 	glDisable(GL_LIGHT0);
@@ -1142,10 +1175,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	//Set Up Camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glFrustum(-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);//Left Right Bottom Top Near Far
-	glOrtho(-10, 10, -10, 10, 1.0, 1.0);//Left Right Bottom Top Near Far
+	glFrustum(-1.0, 1.0, -1.0, 1.0, 1, 100000.0);//Left Right Bottom Top Near Far
+	//glOrtho(-10, 10, -10, 10, 1.0, 10.0);//Left Right Bottom Top Near Far
+	glTranslatef(0, -3, -15);
+	glRotatef(180, 0, 1, 0);
+	glScalef(20, 20, 20);
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glLoadIdentity(); 
 	//}
 
 	glEnable(GL_DEPTH_TEST);
