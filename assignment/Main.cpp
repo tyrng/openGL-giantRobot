@@ -14,6 +14,7 @@ using namespace std;
 
 #pragma comment (lib, "OpenGL32.lib")
 #pragma comment (lib, "GLU32.lib")
+#pragma comment (lib, "Winmm.lib")
 
 #define WINDOW_TITLE "OpenGL Window"
 
@@ -73,6 +74,8 @@ BITMAP BMP;
 HBITMAP hBMP = NULL;
 int texturePattern = 7;
 static int TOTAL_TEXTURE_PATTERN = 8;
+
+boolean playsound = false;
 
 //For lighting
 float lightx = 0.2;
@@ -346,7 +349,18 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		{
 			bodyParts = 'T';
 		}
-		else if (wParam == 0x30) /*0*/ { }
+		else if (wParam == 0x30) /*0*/ 
+		{
+			if (!playsound)
+			{
+				PlaySound(TEXT("warOfLastWolves.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			}
+			else
+			{
+				PlaySound(NULL, NULL, SND_ASYNC);
+			}
+			playsound = !playsound;
+		}
 		else if (wParam == 0x31) /*1*/ { clear(); animationON = true; bow = true;   }
 		else if (wParam == 0x32) /*2*/ { clear(); animationON = true; walk = true; }
 		else if (wParam == 0x33) /*3*/ { clear(); animationON = true; fly = true;  }
