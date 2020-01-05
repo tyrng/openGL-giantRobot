@@ -131,6 +131,10 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			int yPos = GET_Y_LPARAM(lParam);
 			wholeBodyAngleY += xPos - lastX;
 			wholeBodyAngleX += yPos - lastY;
+			if (wholeBodyAngleX <= -39.0f*camera)
+				wholeBodyAngleX = -39.0f*camera;
+			else if (wholeBodyAngleX >= 73.0f)
+				wholeBodyAngleX = 73.0f;
 			lastX = xPos;
 			lastY = yPos;
 		}
@@ -160,8 +164,24 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		lastYR = GET_Y_LPARAM(lParam);
 		break;
 	case WM_MOUSEWHEEL:
-		zoomLevel += GET_WHEEL_DELTA_WPARAM(wParam) / 120.0f;
-		if (cameraOn) { camera += GET_WHEEL_DELTA_WPARAM(wParam) / 1000.0f; }
+		if (cameraOn) {
+			zoomLevel = camera;
+			camera += GET_WHEEL_DELTA_WPARAM(wParam) / 1000.0f;
+			if (camera <= 0.16f)
+			{
+				camera = 0.16f;
+			}
+			else if (camera >= 2.68f)
+			{
+				camera = 2.68f;
+			}
+			if (wholeBodyAngleX == -39.0f*zoomLevel)
+				wholeBodyAngleX = -39.0f*camera;
+			//DEBUG-------------------------------------------------------
+			char str[256];
+			sprintf_s(str, "Camera: %f \n", camera);
+			OutputDebugString(str);
+		}
 		break;
 
 	case WM_KEYDOWN:
@@ -1211,6 +1231,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 
 	glEnable(GL_DEPTH_TEST);
 
+	// Borderless fullscreen
 	HWND hThisWnd = FindWindow(WINDOW_TITLE, WINDOW_TITLE);
 	if (hThisWnd)
 	{

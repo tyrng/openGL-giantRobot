@@ -241,10 +241,6 @@ void my3DPolygon(float polygon[], int numOfElements) {
 	float z0 = polygon[numOfElements - 1];
 	float z1 = polygon[numOfElements - 2];
 
-	//OUTPUT-------------------------------------------------------
-	char str[256];
-	sprintf_s(str, "It works! - number: %d \n", numOfElements);
-	OutputDebugString(str);
 	//-------------------------------------------------------------
 
 	float xMax = 0, xMin = 10, yMax = 0, yMin = 10, xLen = 0, yLen = 0, scale = 1;
