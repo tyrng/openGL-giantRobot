@@ -57,6 +57,12 @@ float shieldz = 0.0f;
 float swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
 float delay = 0.0f;
 
+int laserDirection = -1;
+double laserSize[] = { 1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 };
+float shootLaser[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+float shootLaserAngle[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+double laserAngleY = 0.0;
+
 void resetToFalse() {
 	walk = false;
 	fly = false;
@@ -116,6 +122,18 @@ void clear() {
 	shieldz = 0.0f;
 	swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
 	delay = 0.0f;
+
+	laserDirection = -1;
+	for (int n = 0; n < 12; n++)
+	{
+		if (n == 0)
+			laserSize[n] = 1.0;
+		else
+			laserSize[n] = 0.0;
+		shootLaser[n] = 0.0;
+		shootLaserAngle[n] = 0.0;
+	}
+	laserAngleY = 0.0;
 }
 
 LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -439,6 +457,17 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
 			delay = 0.0f;
 
+			laserDirection = -1;
+			for (int n = 0; n < 12; n++)
+			{
+				if (n == 0)
+					laserSize[n] = 1.0;
+				else
+					laserSize[n] = 0.0;
+				shootLaser[n] = 0.0;
+				shootLaserAngle[n] = 0.0;
+			}
+			laserAngleY = 0.0;
 
 			lightOn = false;
 		}
@@ -789,13 +818,6 @@ void bowON() {
 	if (dir) { BangleX += 0.5; }
 	else { BangleX -= 0.5; }
 }
-
-int laserDirection = -1;
-double laserSize[] = { 1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 };
-float shootLaser[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-float shootLaserAngle[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-double laserAngleY = 0.0;
-int n;
 void laserON() {
 	//boolean firstRun = false;
 	//if (firstRun == false) {
@@ -813,7 +835,7 @@ void laserON() {
 	//	firstRun = true;
 	//}
 
-	for (n = 0; n<12; n++)
+	for (int n = 0; n<12; n++)
 	{
 		if (compare_float(laserAngleY,0.0) || compare_float(laserAngleY, 30.0) || compare_float(laserAngleY, -30.0))
 		{
