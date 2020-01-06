@@ -84,6 +84,8 @@ int texturePattern = 0;
 static int TOTAL_TEXTURE_PATTERN = 6;
 
 boolean playsound = false;
+int width, height;
+float ratio;
 
 //For lighting
 float lightx = 0.0;
@@ -95,6 +97,7 @@ float lightz2 = 0.0; // - infront, + go back
 GLfloat ambientLight[] = { 0.1, 0.1, 0.1, 1.0 }; //RGBA
 GLfloat diffuseLight[] = { 0.8, 0.8, 0.0, 1.0 }; //RGBA
 boolean lightOn = false;
+boolean perspective = true;
 string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp", "metal.bmp" };
 int textureEnvironmentIndex = -1, textureEnvironmentSize;
 std::string environmentTopTextureArray[] = { "environmentTexture/classmplanet_up.bmp", "environmentTexture/drakeq_up.bmp", "environmentTexture/frozen_up.bmp", "environmentTexture/sandcastle_up.bmp"};
@@ -152,10 +155,22 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			int yPos = GET_Y_LPARAM(lParam);
 			wholeBodyAngleY += xPos - lastX;
 			wholeBodyAngleX += yPos - lastY;
-			if (wholeBodyAngleX <= -39.0f*camera)
-				wholeBodyAngleX = -39.0f*camera;
-			else if (wholeBodyAngleX >= 73.0f)
-				wholeBodyAngleX = 73.0f;
+			if (perspective)
+			{
+				if (wholeBodyAngleX <= -39.0f*camera)
+					wholeBodyAngleX = -39.0f*camera;
+				else if (wholeBodyAngleX >= 73.0f)
+					wholeBodyAngleX = 73.0f;
+			}
+			else
+			{
+				if (wholeBodyAngleX <= 31.0f/camera)
+					wholeBodyAngleX = 31.0f/camera;
+				else if (wholeBodyAngleX >= 90.0f)
+				{
+					wholeBodyAngleX = 90.0f;
+				}
+			}
 			lastX = xPos;
 			lastY = yPos;
 		}
@@ -188,16 +203,40 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		if (cameraOn) {
 			zoomLevel = camera;
 			camera += GET_WHEEL_DELTA_WPARAM(wParam) / 1000.0f;
-			if (camera <= 0.16f)
+			if (perspective)
 			{
-				camera = 0.16f;
+				if (camera <= 0.16f)
+				{
+					camera = 0.16f;
+				}
+				else if (camera >= 2.68f)
+				{
+					camera = 2.68f;
+				}
+				if (wholeBodyAngleX <= -39.0f*zoomLevel)
+					wholeBodyAngleX = -39.0f*camera;
 			}
-			else if (camera >= 2.68f)
+			else
 			{
-				camera = 2.68f;
+				if (camera <= 0.4f)
+				{
+					camera = 0.4f;
+				}
+				else if (camera >= 2.67f)
+				{
+					camera = 2.679999f;
+				}
+				if (wholeBodyAngleX <= 31.0/ camera)
+					wholeBodyAngleX = 31.0f/camera;
+				else if (wholeBodyAngleX >= 90.0f)
+				{
+					wholeBodyAngleX = 90.0f;
+				}
+				//DEBUG-------------------------------------------------------
+				char str[256];
+				sprintf_s(str, "camera: %f \n", camera);
+				OutputDebugString(str);
 			}
-			if (wholeBodyAngleX == -39.0f*zoomLevel)
-				wholeBodyAngleX = -39.0f*camera;
 		}
 		break;
 
@@ -408,7 +447,11 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		else if (wParam == 0x36) /*6*/ { }
 		else if (wParam == 0x37) /*7*/ { }
 		else if (wParam == 0x38) /*8*/ { }
-		else if (wParam == 0x39) /*9*/ { }
+		else if (wParam == 0x39) /*9*/ 
+		{ 
+			perspective = !perspective;
+			cameraSetup();
+		}
 
 		else if (wParam == VK_CONTROL) /*CTRL - change texture*/ { if (texturePattern < TOTAL_TEXTURE_PATTERN) { texturePattern++; } else { texturePattern = 0; } }
 		else if (wParam == VK_RETURN) /*CTRL - change environment*/ 
@@ -448,6 +491,9 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			//close texture
 			texturePattern = 0;
 			textureEnvironmentIndex = -1;
+
+			perspective = true;
+			cameraSetup();
 
 			//stop animation
 			animationON = false;
@@ -1310,12 +1356,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 
 	// Get screen resolution
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &resolution, 0);
-	int width, height;
 	//width = resolution.right - resolution.left;
 	width = GetSystemMetrics(SM_CXSCREEN);
 	//height = resolution.top - resolution.bottom;
 	height = GetSystemMetrics(SM_CYSCREEN);
-	float ratio = (float)width / (float)height;
+	ratio = (float)width / (float)height;
 
 	HWND hWnd = CreateWindow(WINDOW_TITLE, WINDOW_TITLE, WS_POPUP,
 		CW_USEDEFAULT, CW_USEDEFAULT, width, height,
@@ -1345,19 +1390,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 
-	//if (cameraOn) {
-	//Set Up Camera
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glViewport(0, 0, width, height);
-	glFrustum(-1.5 * ratio, 1.5 * ratio, -1.5, 1.5, 1, 100000.0);//Left Right Bottom Top Near Far
-	//glOrtho(-10, 10, -10, 10, 1.0, 10.0);//Left Right Bottom Top Near Far
-	glTranslatef(0, -3, -15);
-	glRotatef(180, 0, 1, 0);
-	glScalef(20, 20, 20);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity(); 
-	//}
+	cameraSetup();
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -1401,4 +1434,30 @@ bool compare_float(double x, double y, double epsilon) {
 	if (fabs(x - y) < epsilon)
 		return true; //they are same
 	return false; //they are not same
+}
+
+void cameraSetup()
+{
+	//Set Up Camera
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glViewport(0, 0, width, height);
+	if (perspective)
+	{
+		glFrustum(-1.5 * ratio, 1.5 * ratio, -1.5, 1.5, 1, 100000.0);//Left Right Bottom Top Near Far
+		glTranslatef(0, -3, -15);
+	}
+	else
+	{
+		glOrtho(-1 * ratio, 1 * ratio, -1, 1, -1.0, 10.0);//Left Right Bottom Top Near Far
+	}
+	glRotatef(180, 0, 1, 0);
+	if (perspective)
+		glScalef(20, 20, 20);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	if (!perspective)
+	{
+		wholeBodyAngleX = 31.0f*camera;
+	}
 }
