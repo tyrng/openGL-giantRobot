@@ -80,8 +80,8 @@ RECT resolution;
 GLuint texture = 0;
 BITMAP BMP;
 HBITMAP hBMP = NULL;
-int texturePattern = 7;
-static int TOTAL_TEXTURE_PATTERN = 8;
+int texturePattern = 0;
+static int TOTAL_TEXTURE_PATTERN = 6;
 
 boolean playsound = false;
 
@@ -95,7 +95,7 @@ float lightz2 = 0.0; // - infront, + go back
 GLfloat ambientLight[] = { 0.1, 0.1, 0.1, 1.0 }; //RGBA
 GLfloat diffuseLight[] = { 0.8, 0.8, 0.0, 1.0 }; //RGBA
 boolean lightOn = false;
-string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp","brick.bmp", "metal.bmp","wood.bmp" };
+string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp", "metal.bmp" };
 int textureEnvironmentIndex = -1, textureEnvironmentSize;
 std::string environmentTopTextureArray[] = { "environmentTexture/classmplanet_up.bmp", "environmentTexture/drakeq_up.bmp", "environmentTexture/frozen_up.bmp", "environmentTexture/sandcastle_up.bmp"};
 std::string environmentBottomTextureArray[] = { "environmentTexture/classmplanet_dn.bmp", "environmentTexture/drakeq_dn.bmp", "environmentTexture/frozen_dn.bmp", "environmentTexture/sandcastle_dn.bmp" };
@@ -410,7 +410,7 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		else if (wParam == 0x38) /*8*/ { }
 		else if (wParam == 0x39) /*9*/ { }
 
-		else if (wParam == VK_CONTROL) /*CTRL - change texture*/ { if (texturePattern < TOTAL_TEXTURE_PATTERN) { texturePattern++; } else { texturePattern = 1; } }
+		else if (wParam == VK_CONTROL) /*CTRL - change texture*/ { if (texturePattern < TOTAL_TEXTURE_PATTERN) { texturePattern++; } else { texturePattern = 0; } }
 		else if (wParam == VK_RETURN) /*CTRL - change environment*/ 
 		{
 			textureEnvironmentSize = (sizeof(environmentBackTextureArray) / sizeof(*environmentBackTextureArray)) - 1;
@@ -446,7 +446,7 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			bodyParts = 'A';
 
 			//close texture
-			texturePattern = 7;
+			texturePattern = 0;
 			textureEnvironmentIndex = -1;
 
 			//stop animation
