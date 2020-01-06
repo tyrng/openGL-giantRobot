@@ -45,18 +45,34 @@ void shield() {
 	gluDeleteQuadric(var);
 }
 
-void lasers() {
+void laserL(float laserSize) {
 	glPushMatrix();
-	glTranslatef(0.05, 0.78, -0.25);
-	glScalef(1, 1, 0.2);
+	glTranslatef(0.0f, 0.69f, 0.0f);
+	glPushMatrix();
+	glTranslatef(-0.25f, 0.15f, -0.3f);
+	glPushMatrix();
+	//glTranslatef(-0.05, 0.78, -0.25);
+	glRotatef(90, 0, 1, 0);
+	glScalef(laserSize, laserSize, laserSize);
 	glColor3f(1, 1, 0);
-	cylinder();
+	cylinder2(0.01, 0.05);
 	glPopMatrix();
+	glPopMatrix();
+	glPopMatrix();
+}
 
+void laserR(float laserSize) {
 	glPushMatrix();
-	glTranslatef(-0.05, 0.78, -0.25);
-	glScalef(1, 1, 0.2);
+	glTranslatef(0.0f, 0.69f, 0.0f);
+	glPushMatrix();
+	glTranslatef(0.25f, 0.15f, -0.3f);
+	glPushMatrix();
+	//glTranslatef(-0.05, 0.78, -0.25);
+	glRotatef(90, 0, 1, 0);
+	glScalef(laserSize, laserSize, laserSize);
 	glColor3f(1, 1, 0);
-	cylinder();
+	cylinder2(0.01, 0.05);
+	glPopMatrix();
+	glPopMatrix();
 	glPopMatrix();
 }

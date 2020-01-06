@@ -78,6 +78,16 @@ void head() {
 	my3DPolygon(peacock, sizeof(peacock) / sizeof(peacock[0]));
 	glPopMatrix();
 
+	glPopMatrix();
+
+	gluDeleteQuadric(var);
+}
+
+void laserLauncherL()
+{
+	glPushMatrix();
+	glTranslatef(0.0f, 0.69f, 0.0f);
+
 	//LaserLauncherL
 	glPushMatrix();
 	glTranslatef(-0.26f, 0.15f, -0.07f);
@@ -86,7 +96,7 @@ void head() {
 
 	glPushMatrix();
 	glColor3f(0.4f, 0.4f, 0.4f);
-	cylinder2(0.1, 0.45, 0.7*255, 0.7 * 255, 0.7 * 255);
+	cylinder2(0.1, 0.45, 0.7 * 255, 0.7 * 255, 0.7 * 255);
 	glPopMatrix();
 
 	glPushMatrix();
@@ -102,6 +112,14 @@ void head() {
 	glPopMatrix();
 
 	glPopMatrix();
+
+	glPopMatrix();
+}
+
+void laserLauncherR()
+{
+	glPushMatrix();
+	glTranslatef(0.0f, 0.69f, 0.0f);
 
 	//LaserLauncherR
 	glPushMatrix();
@@ -129,6 +147,4 @@ void head() {
 	glPopMatrix();
 
 	glPopMatrix();
-
-	gluDeleteQuadric(var);
 }

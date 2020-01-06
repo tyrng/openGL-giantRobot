@@ -40,11 +40,9 @@ void myFeet();
 void feet(char position);
 
 //Misc
-void myThorn();
 void sword();
 void shield();
-void myYogaMat();
-void sunglasses();
-void ball();
-void lasers();
-void topHat();
+void laserL(float laserSize);
+void laserR(float laserSize);
+void laserLauncherL();
+void laserLauncherR();

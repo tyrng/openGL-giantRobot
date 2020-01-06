@@ -80,11 +80,14 @@ static int TOTAL_TEXTURE_PATTERN = 8;
 boolean playsound = false;
 
 //For lighting
-float lightx = 0.2;
-float lighty = 2.0;
-float lightz = -5.0; // - infront, + go back
-GLfloat ambientLight[] = { 0.3, 0.3, 0.3, 1.0 }; //RGBA
-GLfloat diffuseLight[] = { 0.3, 0.3, 0.3, 1.0 }; //RGBA
+float lightx = 0.0;
+float lighty = 1.0;
+float lightz = 0.0; // - infront, + go back
+float lightx2 = 0.0;
+float lighty2 = 1.0;
+float lightz2 = 0.0; // - infront, + go back
+GLfloat ambientLight[] = { 0.1, 0.1, 0.1, 1.0 }; //RGBA
+GLfloat diffuseLight[] = { 0.8, 0.8, 0.0, 1.0 }; //RGBA
 boolean lightOn = false;
 string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp","brick.bmp", "metal.bmp","wood.bmp" };
 int textureEnvironmentIndex = 1;
@@ -107,7 +110,7 @@ void clear() {
 	dir = 1;
 	glLoadIdentity();
 	resetToFalse();
-	lightOn = false;
+	//lightOn = false;
 	attackPhase = 1; 
 	shieldy = 0.0f; 
 	shieldz = 0.0f;
@@ -177,10 +180,6 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			}
 			if (wholeBodyAngleX == -39.0f*zoomLevel)
 				wholeBodyAngleX = -39.0f*camera;
-			//DEBUG-------------------------------------------------------
-			char str[256];
-			sprintf_s(str, "Camera: %f \n", camera);
-			OutputDebugString(str);
 		}
 		break;
 
@@ -439,6 +438,9 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 			shieldz = 0.0f;
 			swordy = 0.0f, swordz = 0.0f, swordRx = 0.0f;
 			delay = 0.0f;
+
+
+			lightOn = false;
 		}
 		break;
 
@@ -536,6 +538,18 @@ void moveHead(float angleX, float angleY) {
 	glRotatef(angleX, 1, 0.0, 0.0); //X- up down, Y- left right
 	glRotatef(angleY, 0.0, 1, 0.0); //X- up down, Y- left right
 	glTranslatef(0.0f, -0.77f, 0.0f);
+}
+
+void moveLaserLauncher(float laserAngleY, char type)
+{
+	if (type == 'L')
+	{
+		glRotatef(laserAngleY, 0, 1, 0);
+	}
+	else if (type == 'R')
+	{
+		glRotatef(-laserAngleY, 0, 1, 0);
+	}
 }
 
 void moveBody(float angleX, float angleY) {
@@ -776,27 +790,83 @@ void bowON() {
 	else { BangleX -= 0.5; }
 }
 
-float shootLaser = 0.0;
+int laserDirection = -1;
+double laserSize[] = { 1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 };
+float shootLaser[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+float shootLaserAngle[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+double laserAngleY = 0.0;
+int n;
 void laserON() {
-	boolean firstRun = false;
-	if (firstRun == false) {
-		QangleX = 90;
-		BangleY = -20;
-		AangleX = -30;
-		AangleY = 30;
-		EangleX = 60;
-		LangleX = 30;
-		LangleY = 40;
-		KangleX = -90;
-		OangleX = 30;
-		OangleY = 20;
-		HangleY = 20;
-		firstRun = true;
+	//boolean firstRun = false;
+	//if (firstRun == false) {
+	//	QangleX = 90;
+	//	BangleY = -20;
+	//	AangleX = -30;
+	//	AangleY = 30;
+	//	EangleX = 60;
+	//	LangleX = 30;
+	//	LangleY = 40;
+	//	KangleX = -90;
+	//	OangleX = 30;
+	//	OangleY = 20;
+	//	HangleY = 20;
+	//	firstRun = true;
+	//}
+
+	for (n = 0; n<12; n++)
+	{
+		if (compare_float(laserAngleY,0.0) || compare_float(laserAngleY, 30.0) || compare_float(laserAngleY, -30.0))
+		{
+			if (laserSize[n] < 5.0 && laserSize[n] >= 1.0)
+			{
+				if (compare_float(laserSize[n], 1.0))
+				{
+					laserDirection = -laserDirection;
+					shootLaserAngle[n] = laserAngleY;
+				}
+				laserSize[n] += 0.05;
+			}
+			else if (compare_float(laserSize[n], 5.05))
+			{
+				laserSize[n] = 5.1;
+				shootLaser[n] -= 0.001f;
+				laserAngleY += (0.05*laserDirection);
+				if (n == 11)
+				{
+					laserSize[0] = 1.0;
+				}
+				else
+				{
+					laserSize[n + 1] = 1.0;
+				}
+			}
+		}
+		else
+		{
+			laserAngleY += 0.05*laserDirection;
+		}
+		//DEBUG-------------------------------------------------------
+		char str[256];
+		sprintf_s(str, "laserAngleY: %f \n", laserAngleY);
+		OutputDebugString(str);
+
+		if (shootLaser[n] <= -10.0f)
+		{
+			shootLaser[n] = 0.0f;
+			laserSize[n] = 0.0;
+			shootLaserAngle[n] = 0.0f;
+		}
+		else if (shootLaser[n] <= -0.001) 
+		{
+			shootLaser[n] -= 0.01f;
+		}
 	}
 
-	if (shootLaser != 0.01) {
-		shootLaser -= 0.001;
-	}
+	//if (laserAngleY >= 30.0 || laserAngleY <= -30.0)
+	//{
+	//	laserDirection = -laserDirection;
+	//}
+
 }
 void environment() {
 	glColor3f(1, 1, 1);
@@ -902,22 +972,6 @@ void display()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glShadeModel(GL_SMOOTH);
-	//Set light position
-	if (lightOn) {
-		GLfloat lightPosition[] = { lightx, lighty, lightz, 1.0 }; //XYZ
-
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambientLight);
-		glEnable(GL_COLOR_MATERIAL); /* Ambient and diffuse material latch immediately to the current color. */
-		glColorMaterial(GL_FRONT, GL_DIFFUSE);
-
-		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-		glLightfv(GL_LIGHT1, GL_POSITION, lightPosition);
-		glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-		glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
-		glEnable(GL_LIGHT0);
-		glEnable(GL_LIGHT1);
-		glEnable(GL_LIGHTING);
-	}
 
 	if (texturePattern > 0) {
 
@@ -967,6 +1021,24 @@ void display()
 	//glRotatef(wholeBodyAngleZ, 0, 0, 1);
 	glScalef(0.5, 0.5, 0.5);
 
+	//Set light position
+	if (lightOn) {
+		GLfloat lightPosition[] = { lightx, lighty, lightz, 0.0 }; //XYZ
+		GLfloat lightPosition2[] = { lightx2, lighty2, lightz2, 1.0 }; //XYZ
+
+		//glMaterialfv(GL_FRONT, GL_AMBIENT, ambientLight);
+		glEnable(GL_COLOR_MATERIAL); /* Ambient and diffuse material latch immediately to the current color. */
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+		glLightfv(GL_LIGHT1, GL_POSITION, lightPosition2);
+		glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_LIGHT1);
+		glEnable(GL_LIGHTING);
+	}
+
 	glPushMatrix();
 
 	//For keep repeating animations
@@ -981,17 +1053,17 @@ void display()
 		glPopMatrix();
 	}
 
-	if (laser) {
-		glTranslatef(-loadTimes/1000, 0, 0);
-		glPushMatrix();
-		loadTimes += 1;
-		if (loadTimes == 600) {
-			glLoadIdentity();
-			loadTimes = 0;
-			shootLaser = 0;
-		}
-		glPopMatrix();
-	}
+	//if (laser) {
+	//	glTranslatef(-loadTimes/1000, 0, 0);
+	//	glPushMatrix();
+	//	loadTimes += 1;
+	//	if (loadTimes == 600) {
+	//		glLoadIdentity();
+	//		loadTimes = 0;
+	//		shootLaser = 0;
+	//	}
+	//	glPopMatrix();
+	//}
 
 	if (walk)
 	{
@@ -1036,10 +1108,32 @@ void display()
 		glPushMatrix();
 		laserON();
 		glPopMatrix();
-		glPushMatrix();
-		glTranslatef(0, 0, shootLaser);
-		lasers();
-		glPopMatrix();
+		for (int n = 0; n < 12;n++)
+		{
+			if (laserSize[n] > 1)
+			{
+				glPushMatrix();
+				glRotatef(shootLaserAngle[n]+8, 0, 1, 0);
+				glPushMatrix();
+				glTranslatef(0, 0, shootLaser[n]);
+				laserL(laserSize[n]);
+				glPopMatrix();
+				glPopMatrix();
+			}
+		}
+		for (int n = 0; n < 12; n++)
+		{
+			if (laserSize[n] > 1)
+			{
+				glPushMatrix();
+				glRotatef(-shootLaserAngle[n]-8, 0, 1, 0);
+				glPushMatrix();
+				glTranslatef(0, 0, shootLaser[n]);
+				laserR(laserSize[n]);
+				glPopMatrix();
+				glPopMatrix();
+			}
+		}
 	}
 
 	moveBody(BangleX, BangleY);
@@ -1048,6 +1142,18 @@ void display()
 	glPushMatrix();
 	moveHead(HangleX, HangleY);
 	head();
+	glPopMatrix();
+
+	//Laser Launcher L
+	glPushMatrix();
+	moveLaserLauncher(laserAngleY, 'L');
+	laserLauncherL();
+	glPopMatrix();
+
+	//Laser Launcher R
+	glPushMatrix();
+	moveLaserLauncher(laserAngleY, 'R');
+	laserLauncherR();
 	glPopMatrix();
 
 	//Body
@@ -1262,3 +1368,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 	return true;
 }
 //--------------------------------------------------------------------
+bool compare_float(float x, float y, float epsilon) {
+	if (fabs(x - y) < epsilon)
+		return true; //they are same
+	return false; //they are not same
+}
+bool compare_float(double x, double y, double epsilon) {
+	if (fabs(x - y) < epsilon)
+		return true; //they are same
+	return false; //they are not same
+}

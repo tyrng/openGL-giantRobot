@@ -22,3 +22,5 @@ void cuboid();
 void pyramid();
 void my3DPolygon(float polygon[], int numOfElements);
 
+bool compare_float(float x, float y, float epsilon = 0.01f);
+bool compare_float(double x, double y, double epsilon = 0.01f);
