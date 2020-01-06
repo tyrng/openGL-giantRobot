@@ -54,7 +54,7 @@ void laserL(float laserSize) {
 	//glTranslatef(-0.05, 0.78, -0.25);
 	glRotatef(90, 0, 1, 0);
 	glScalef(laserSize, laserSize, laserSize);
-	glColor3f(1, 1, 0);
+	glColor3f(1, 0, 0.2);
 	cylinder2(0.01, 0.05);
 	glPopMatrix();
 	glPopMatrix();
@@ -70,7 +70,7 @@ void laserR(float laserSize) {
 	//glTranslatef(-0.05, 0.78, -0.25);
 	glRotatef(90, 0, 1, 0);
 	glScalef(laserSize, laserSize, laserSize);
-	glColor3f(1, 1, 0);
+	glColor3f(1, 0, 0.2);
 	cylinder2(0.01, 0.05);
 	glPopMatrix();
 	glPopMatrix();
