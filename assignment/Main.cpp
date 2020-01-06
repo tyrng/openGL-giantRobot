@@ -96,7 +96,7 @@ GLfloat ambientLight[] = { 0.1, 0.1, 0.1, 1.0 }; //RGBA
 GLfloat diffuseLight[] = { 0.8, 0.8, 0.0, 1.0 }; //RGBA
 boolean lightOn = false;
 string fileName[] = { "diamond.bmp","rocks.bmp", "ice.bmp","smoke.bmp", "surface.bmp","brick.bmp", "metal.bmp","wood.bmp" };
-int textureEnvironmentIndex = 1;
+int textureEnvironmentIndex = -1, textureEnvironmentSize;
 std::string environmentTopTextureArray[] = { "environmentTexture/classmplanet_up.bmp", "environmentTexture/drakeq_up.bmp", "environmentTexture/frozen_up.bmp", "environmentTexture/sandcastle_up.bmp"};
 std::string environmentBottomTextureArray[] = { "environmentTexture/classmplanet_dn.bmp", "environmentTexture/drakeq_dn.bmp", "environmentTexture/frozen_dn.bmp", "environmentTexture/sandcastle_dn.bmp" };
 std::string environmentLeftTextureArray[] = { "environmentTexture/classmplanet_rt.bmp", "environmentTexture/drakeq_rt.bmp", "environmentTexture/frozen_rt.bmp", "environmentTexture/sandcastle_rt.bmp" };
@@ -411,7 +411,11 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		else if (wParam == 0x39) /*9*/ { }
 
 		else if (wParam == VK_CONTROL) /*CTRL - change texture*/ { if (texturePattern < TOTAL_TEXTURE_PATTERN) { texturePattern++; } else { texturePattern = 1; } }
-		else if (wParam == VK_RETURN) /*CTRL - change environment*/ { if (textureEnvironmentIndex < (sizeof(environmentBackTextureArray) / sizeof(*environmentBackTextureArray))-1) { textureEnvironmentIndex++; } else { textureEnvironmentIndex = 0; } }
+		else if (wParam == VK_RETURN) /*CTRL - change environment*/ 
+		{
+			textureEnvironmentSize = (sizeof(environmentBackTextureArray) / sizeof(*environmentBackTextureArray)) - 1;
+			if (textureEnvironmentIndex < textureEnvironmentSize) { textureEnvironmentIndex++; } else { textureEnvironmentIndex = -1; }
+		}
 		else if (wParam == VK_TAB) /*TAB - change lighting*/ { lightOn = !lightOn; }
 
 		//else if (wParam == VK_RETURN) { cameraOn = !cameraOn; lightz = -lightz; }
@@ -443,7 +447,7 @@ LRESULT WINAPI WindowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 			//close texture
 			texturePattern = 7;
-			textureEnvironmentIndex = 1;
+			textureEnvironmentIndex = -1;
 
 			//stop animation
 			animationON = false;
@@ -867,10 +871,6 @@ void laserON() {
 		{
 			laserAngleY += 0.05*laserDirection;
 		}
-		//DEBUG-------------------------------------------------------
-		char str[256];
-		sprintf_s(str, "laserAngleY: %f \n", laserAngleY);
-		OutputDebugString(str);
 
 		if (shootLaser[n] <= -10.0f)
 		{
@@ -987,7 +987,8 @@ void display()
 	//	OpenGL drawing
 	//--------------------------------
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear background colour (default : black)
-	glClearColor(0.35f, 0.35f, 0.7f, 0.1); //Red Green Blue Alpha
+	//glClearColor(0.35f, 0.35f, 0.7f, 0.1); //Red Green Blue Alpha
+	glClearColor(229.0/255.0, 229.0 /255.0, 229.0 /255.0, 1.0); //Red Green Blue Alpha
 
 	glLineWidth(20.0f);
 	//Enable Alpha
@@ -1264,7 +1265,8 @@ void display()
 
 	endTexture();
 	glPopMatrix();
-	environment();
+	if (textureEnvironmentIndex > -1)
+		environment();
 
 	glPopMatrix();
 
